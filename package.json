@@ -1,0 +1,8 @@
+{
+  "name": "basic-express",
+  "version": "0.0.1",
+  "description": "Base code for quickly developing an express server",
+  "main": "index.js",
+  "repository": "https://github.com/mobalt/basic-express",
+  "author": "Moises Baltazar <mail@moisesb.com>"
+}
