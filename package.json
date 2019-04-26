@@ -4,5 +4,33 @@
   "description": "Base code for quickly developing an express server",
   "main": "index.js",
   "repository": "https://github.com/mobalt/basic-express",
-  "author": "Moises Baltazar <mail@moisesb.com>"
+  "author": "Moises Baltazar <mail@moisesb.com>",
+  "scripts": {
+    "lint": "prettier-eslint 'src/**/*.*' --list-different --write",
+    "lint:check": "prettier-eslint 'src/**/*.*' --list-different; exit 0"
+  },
+  "devDependencies": {
+    "prettier-eslint": "^8.8.2",
+    "prettier-eslint-cli": "^4.7.1"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.test.js",
+        "options": {
+          "semi": true
+        }
+      },
+      {
+        "files": "*.{yml,yaml,json}",
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
+  }
 }
