@@ -6,7 +6,7 @@ export class Text extends Question {
     }
 
     static get canvas_type() {
-        return 'essay_question'
+        return 'text_question'
     }
 
     static get type() {
@@ -14,7 +14,6 @@ export class Text extends Question {
     }
 
     static fromSimple(obj) {
-        const answers = Answer.mapAnswerGroups(obj.answers)
-        return new Text({ ...obj, answers })
+        return new Text({ ...obj, points: 0 })
     }
 }
