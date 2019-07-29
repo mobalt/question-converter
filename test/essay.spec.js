@@ -1,33 +1,29 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
+import { Essay } from '../src/questions/essay'
+
 
 describe('Essay', () => {
     const simple_essay = {
         text: 'Write a 500-word essay below:',
         type: 'Essay',
     }
-    it('is an instance of correct class', function() {
-        this.skip()
+
+    const question = Essay.fromSimple(simple_essay)
+
+    it('is an instance of Essay', function() {
+        question.should.be.an.instanceOf(Essay)
     })
     it('has correct question label', function() {
-        this.skip()
+        question.should.have.property(
+            'text',
+ 'Write a 500-word essay below:'
+        )
     })
-    it('has correct number of answers', function() {
-        this.skip()
-    })
-    it('correct answers are labelled as such', function() {
-        this.skip()
-    })
-    it('wrong answers work', function() {
-        this.skip()
+    it('has no answer items', function() {
+        should.not.exist(question.answers)
     })
     it('worth correct number of points', function() {
-        this.skip()
-    })
-    it('is an instance of correct class', function() {
-        this.skip()
-    })
-    it('is an instance of correct class', function() {
-        this.skip()
+        question.should.have.property('points', 1)
     })
 })
