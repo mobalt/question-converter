@@ -21,25 +21,21 @@ const types = {
     Text,
     TrueFalse,
 }
-const fromCanvas = Question.fromCanvas
 
-function getType(type) {
-    let min = Number.MAX_SAFE_INTEGER,
-        minType = MultipleChoice
+function fuzzyFind(needle, haystack) {
+    let minDistance = Number.MAX_SAFE_INTEGER,
+        minI = -1
 
-    for (let name in types) {
-        const result = editDistance(type, name)
-        if (result < min) {
-            min = result
-            minType = types[name]
+    for (let i in haystack) {
+        const distance = editDistance(needle, haystack[i])
+        if (distance < minDistance) {
+            minDistance = distance
+            minI = i
         }
     }
-    return minType
-}
 
-function fromSimple(obj) {
-    const type = getType(obj.type)
-    let answers
+    return minI
+}
 
     //console.log('type>>>>',type.name)
     switch (type) {
