@@ -1,5 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
+import {TrueFalse} from '../src/questions/truefalse'
 
 describe('True/False', () => {
     const simple_tf = {
@@ -7,28 +8,28 @@ describe('True/False', () => {
         text: 'Is this true?',
         type: 'True-or-False',
     }
+    const question = TrueFalse.fromSimple(simple_tf)
+
     it('is an instance of correct class', function() {
-        this.skip()
+        question.should.be.an.instanceOf(TrueFalse)
     })
     it('has correct question label', function() {
-        this.skip()
+        question.should.have.property('text', 'Is this true?')
     })
     it('has correct number of answers', function() {
-        this.skip()
+        question.answers.length.should.equal(2)
     })
     it('correct answers are labelled as such', function() {
-        this.skip()
+        const [t,f] = question.answers
+
+        t.isCorrect.should.be.true
     })
     it('wrong answers work', function() {
-        this.skip()
+        const [t,f] = question.answers
+
+        f.isCorrect.should.be.false
     })
     it('worth correct number of points', function() {
-        this.skip()
-    })
-    it('is an instance of correct class', function() {
-        this.skip()
-    })
-    it('is an instance of correct class', function() {
-        this.skip()
+        question.should.have.property('points', 1)
     })
 })
