@@ -11,29 +11,15 @@ import { Text } from './text'
 import { TrueFalse } from './truefalse'
 
 const types = {
-    MultipleAnswers,
-    MultipleChoice,
-    Answer,
     Essay,
-    TextOnly,
-    ShortAnswer,
     FileUpload,
     FillInMultipleBlanks,
+    MultipleAnswers,
+    MultipleChoice,
     MultipleDropdowns,
+    ShortAnswer,
+    Text,
     TrueFalse,
-    Item: Question,
-}
-
-const t = {
-    true_false_question: TrueFalse,
-    text_only_question: TextOnly,
-    essay_question: Essay,
-    multiple_dropdowns_question: MultipleDropdowns,
-    multiple_choice_question: MultipleChoice,
-    multiple_answers_question: MultipleAnswers,
-    short_answer_question: ShortAnswer,
-    fill_in_multiple_blanks_question: FillInMultipleBlanks,
-    file_upload_question: FileUpload,
 }
 const fromCanvas = Question.fromCanvas
 
