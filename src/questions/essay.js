@@ -14,7 +14,6 @@ export class Essay extends Question {
     }
 
     static fromSimple(obj) {
-        const answers = Answer.mapAnswerGroups(obj.answers)
-        return new Essay({ ...obj, answers })
+        return new Essay({ ...obj})
     }
 }
