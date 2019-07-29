@@ -1,3 +1,41 @@
+export class Question {
+    constructor({ text, name = 'Question', points = 1, answers }) {
+        this.text = text.trim()
+        this.name = name
+        this.points = points
+        this.answers = answers
+    }
+
+    get type() {
+        return toSnakeCase(this.constructor.name) + '_question'
+    }
+
+    static get canvas_type() {
+        throw new Error("Don't use the internal Question class")
+        return 'generic_question'
+    }
+
+    static get type() {
+        throw new Error("Don't use the internal Question class")
+        return 'Generic Question'
+    }
+
+    static fromSimple(obj) {
+        return null
+    }
+
+    static fromCanvas(obj) {
+        if (obj.question_type in t) {
+            console.log('returning ', obj.question_type, t[obj.question_type])
+            return new t[obj.question_type](obj.question_text)
+        } else {
+            //return new MultipleChoice('Test')
+        }
+    }
+
+    addAnswer(text = '', isCorrect = false) {}
+}
+
 export class Answer {
     constructor(text, isCorrect = false) {
         this.text = text
