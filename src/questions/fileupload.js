@@ -14,6 +14,6 @@ export class FileUpload extends Question {
     }
 
     static fromSimple(obj) {
-        return new FileUpload({ ...obj})
+        return new FileUpload({ ...obj })
     }
 }

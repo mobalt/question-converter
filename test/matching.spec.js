@@ -1,13 +1,13 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 
-describe('Matching', () => {
+describe.skip('Matching', () => {
     const simple_matching = {
         text: 'Match the following:\n  \n',
         type: 'Matching',
         answers: [
-            { left1: 'right1' },
-            { left2: 'right2' },
+            'left1 -- right1',
+            'left2 -- right2',
             'distractor1',
             'distractor2',
             'distractor3',
