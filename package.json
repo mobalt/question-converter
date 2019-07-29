@@ -6,8 +6,8 @@
   "repository": "https://github.com/mobalt/question-converter",
   "author": "Moises Baltazar <me@moisesb.com>",
   "scripts": {
-    "lint": "prettier-eslint 'src/**/*.*' --list-different --write",
-    "lint:check": "prettier-eslint 'src/**/*.*' --list-different; exit 0",
+    "lint": "prettier-eslint '{src,test}/**/*.*' --list-different --write",
+    "lint:check": "prettier-eslint '{src,test}/**/*.*' --list-different; exit 0",
     "build": "babel src --out-dir=dist --source-maps",
     "dev": "babel-node ./src/index.js",
     "start": "nodemon --exec babel-node ./src/index.js",
