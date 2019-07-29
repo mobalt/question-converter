@@ -14,7 +14,10 @@ export class TrueFalse extends Question {
     }
 
     static fromSimple(obj) {
-        const answers = Answer.mapAnswerGroups(obj.answers)
+        const answers = [
+            new Answer('true', obj.answer),
+            new Answer('false', !obj.answer),
+        ]
         return new TrueFalse({ ...obj, answers })
     }
 }
