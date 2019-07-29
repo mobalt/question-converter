@@ -37,21 +37,21 @@ function fuzzyFind(needle, haystack) {
     return minI
 }
 
-    //console.log('type>>>>',type.name)
-    switch (type) {
-        case MultipleChoice:
-        case MultipleAnswers:
-        case ShortAnswer:
-            answers = Answer.mapAnswers(obj.answers)
-            break
-        case FillInMultipleBlanks:
-        case MultipleDropdowns:
-            answers = Answer.mapAnswerGroups(obj.answers)
-            break
-    }
-
-    const result = new type({ ...obj, answers })
-    return result
+function findClosestCanvas(type) {
+    const v = Object.values(types)
+    const minI = fuzzyFind(type, v.map(t => t.canvas_type))
+    return v[minI]
+}
+function findClosestSimple(type) {
+    const v = Object.values(types)
+    const minI = fuzzyFind(type || 'Multiple Choice', v.map(t => t.type))
+    return v[minI]
 }
 
-export { toCanvas, toSimpleObjects, types, fromCanvas, fromSimple }
+function fromSimple(obj) {
+    const type = findClosestSimple(obj.type)
+    const question = new type(obj)
+    return question
+}
+
+export { types, fromSimple }
