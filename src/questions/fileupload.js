@@ -6,7 +6,7 @@ export class FileUpload extends Question {
     }
 
     static get canvas_type() {
-        return 'essay_question'
+        return 'file_upload_question'
     }
 
     static get type() {
@@ -14,7 +14,6 @@ export class FileUpload extends Question {
     }
 
     static fromSimple(obj) {
-        const answers = Answer.mapAnswerGroups(obj.answers)
-        return new FileUpload({ ...obj, answers })
+        return new FileUpload({ ...obj})
     }
 }
