@@ -1,27 +1,14 @@
 import editDistance from 'js-levenshtein'
-import { Question, Answer } from './questions/generic'
-import { MultipleChoice } from './questions/multiple_choice'
-import { MultipleAnswers } from './questions/multiple_answers'
-import { ShortAnswer } from './questions/short_answer'
-import { MultipleDropdowns } from './questions/multiple_dropdowns'
-import { FillInMultipleBlanks } from './questions/multiple_blanks'
-import { Essay } from './questions/essay'
-import { FileUpload } from './questions/fileupload'
-import { TrueFalse } from './questions/truefalse'
-import { Text as TextOnly } from './questions/text'
-
-function toSnakeCase(camelCase) {
-    return camelCase
-        .replace(/[A-Z]/g, m => '_' + m)
-        .substr(1)
-        .toLowerCase()
-}
-
-function toCanvas(obj) {}
-
-function toSimpleObjects(obj) {
-    return new MultipleChoice('Test')
-}
+//import { Answer, Question } from './generic'
+import { Essay } from './essay'
+import { FileUpload } from './fileupload'
+import { FillInMultipleBlanks } from './multiple_blanks'
+import { MultipleAnswers } from './multiple_answers'
+import { MultipleChoice } from './multiple_choice'
+import { MultipleDropdowns } from './multiple_dropdowns'
+import { ShortAnswer } from './short_answer'
+import { Text } from './text'
+import { TrueFalse } from './truefalse'
 
 const types = {
     MultipleAnswers,
