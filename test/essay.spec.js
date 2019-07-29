@@ -2,7 +2,6 @@ import 'chai/register-should'
 import { describe } from 'mocha'
 import { Essay } from '../src/questions/essay'
 
-
 describe('Essay', () => {
     const simple_essay = {
         text: 'Write a 500-word essay below:',
@@ -15,10 +14,7 @@ describe('Essay', () => {
         question.should.be.an.instanceOf(Essay)
     })
     it('has correct question label', function() {
-        question.should.have.property(
-            'text',
- 'Write a 500-word essay below:'
-        )
+        question.should.have.property('text', 'Write a 500-word essay below:')
     })
     it('has no answer items', function() {
         should.not.exist(question.answers)
