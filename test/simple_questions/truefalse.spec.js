@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { TrueFalse } from '../src/questions/truefalse'
+import { TrueFalse } from '../../src/questions/truefalse'
 
 describe('True/False', () => {
     const simple_tf = {

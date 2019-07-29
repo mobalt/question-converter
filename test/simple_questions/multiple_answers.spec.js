@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { MultipleAnswers } from '../src/questions/multiple_answers'
+import { MultipleAnswers } from '../../src/questions/multiple_answers'
 
 describe('Multiple Answers', () => {
     const simple_multianswers = {

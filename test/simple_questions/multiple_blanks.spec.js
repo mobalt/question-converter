@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { FillInMultipleBlanks } from '../src/questions/multiple_blanks'
+import { FillInMultipleBlanks } from '../../src/questions/multiple_blanks'
 
 describe('Fill In Multiple Blanks', () => {
     const simple_multiblanks = {

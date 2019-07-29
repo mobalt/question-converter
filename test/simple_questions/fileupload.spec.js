@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { FileUpload } from '../src/questions/fileupload'
+import { FileUpload } from '../../src/questions/fileupload'
 
 describe('FileUpload', () => {
     const simple_fu = {

@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { MultipleChoice } from '../src/questions/multiple_choice'
+import { MultipleChoice } from '../../src/questions/multiple_choice'
 
 describe('Multiple Choice', () => {
     const simple_mc = {

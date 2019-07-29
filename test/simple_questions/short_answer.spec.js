@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { ShortAnswer } from '../src/questions/short_answer'
+import { ShortAnswer } from '../../src/questions/short_answer'
 
 describe('Short Answer', () => {
     const simple_shortanswer = {

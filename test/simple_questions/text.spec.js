@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { Text } from '../src/questions/text'
+import { Text } from '../../src/questions/text'
 
 describe('Text', () => {
     const simple_text = {

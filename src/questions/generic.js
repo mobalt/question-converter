@@ -1,6 +1,6 @@
 export class Question {
     constructor({ text, name = 'Question', points = 1, answers }) {
-        this.text = text.trim()
+        this.text = text ? text.trim() : ''
         this.name = name
         this.points = points
         this.answers = answers

@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { MultipleDropdowns } from '../src/questions/multiple_dropdowns'
+import { MultipleDropdowns } from '../../src/questions/multiple_dropdowns'
 
 describe('Multiple Dropdowns', () => {
     const simple_mdropdowns = {
