@@ -8,9 +8,13 @@
   "scripts": {
     "lint": "prettier-eslint 'src/**/*.*' --list-different --write",
     "lint:check": "prettier-eslint 'src/**/*.*' --list-different; exit 0",
-    "build": "babel src --out-dir=dist",
-    "dev": "babel-node ./src/bin/www",
-    "test": "mocha"
+    "build": "babel src --out-dir=dist --source-maps",
+    "dev": "babel-node ./src/index.js",
+    "start": "nodemon --exec babel-node ./src/index.js",
+    "test": "mocha --require esm"
+  },
+  "dependencies": {
+    "esm": "^3.2.25"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -18,7 +22,9 @@
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
+    "chai": "^4.2.0",
     "mocha": "^6.2.0",
+    "nodemon": "^1.19.1",
     "prettier-eslint": "^8.8.2",
     "prettier-eslint-cli": "^4.7.1"
   },
