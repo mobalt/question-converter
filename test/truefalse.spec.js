@@ -1,6 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import {TrueFalse} from '../src/questions/truefalse'
+import { TrueFalse } from '../src/questions/truefalse'
 
 describe('True/False', () => {
     const simple_tf = {
@@ -20,12 +20,12 @@ describe('True/False', () => {
         question.answers.length.should.equal(2)
     })
     it('correct answers are labelled as such', function() {
-        const [t,f] = question.answers
+        const [t, f] = question.answers
 
         t.isCorrect.should.be.true
     })
     it('wrong answers work', function() {
-        const [t,f] = question.answers
+        const [t, f] = question.answers
 
         f.isCorrect.should.be.false
     })

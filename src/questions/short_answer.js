@@ -6,11 +6,11 @@ export class ShortAnswer extends Question {
     }
 
     static get canvas_type() {
-        return 'multiple_choice_question'
+        return 'short_answer_question'
     }
 
     static get type() {
-        return 'Multiple Choice'
+        return 'Short Answer'
     }
 
     static fromSimple(obj) {

@@ -6,7 +6,7 @@ export class Text extends Question {
     }
 
     static get canvas_type() {
-        return 'text_question'
+        return 'text_only_question'
     }
 
     static get type() {
