@@ -78,3 +78,35 @@ export class Answer {
         return answers
     }
 }
+
+function get_first_nonempty_field(obj, fields) {
+    for (let i of fields) {
+        if (obj[i] !== '') {
+            return obj[i]
+        }
+    }
+    return null
+}
+
+function convert(template) {
+    return function(obj) {
+        const newObj = {}
+        for (let propName in template) {
+            const prop = template[propName]
+
+            let result = null
+            if (Array.isArray(prop)) {
+                result = get_first_nonempty_field(obj, prop)
+            } else if (typeof prop == 'string') {
+                result = obj[prop] !== '' ? obj[prop] : null
+            } else if (typeof prop == 'function') {
+                result = prop(obj)
+            } else {
+                throw new Error('Unexpected format')
+            }
+
+            newObj[propName] = result
+        }
+        return newObj
+    }
+}
