@@ -37,9 +37,12 @@ export class Question {
 }
 
 export class Answer {
-    constructor(text, isCorrect = false) {
+    constructor({ text, isCorrect = false, group, comments, id }) {
         this.text = text
         this.isCorrect = isCorrect
+        this.group = group
+        this.comments = comments
+        this.id = id
     }
 
     setCorrect() {
@@ -53,7 +56,7 @@ export class Answer {
         const text = result[2],
             isCorrect = !!result[1]
 
-        return new Answer(text, isCorrect)
+        return new Answer({ text, isCorrect })
     }
 
     static mapAnswers(a) {
