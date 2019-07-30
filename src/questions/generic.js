@@ -117,3 +117,13 @@ const canvasAnswer = convert({
     id: ['id'],
     isCorrect: obj => !!obj.weight,
 })
+const canvasQuestion = convert({
+    id: ['id'],
+    name: ['question_name'],
+    points: ['points_possible'],
+    text: ['question_text'],
+    correct_comments: ['correct_comments', 'correct_comments_html'],
+    incorrect_comments: ['incorrect_comments', 'incorrect_comments_html'],
+    neutral_comments: ['neutral_comments', 'neutral_comments_html'],
+    answers: obj => obj.answers.map(canvasAnswer),
+})
