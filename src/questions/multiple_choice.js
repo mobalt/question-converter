@@ -15,6 +15,6 @@ export class MultipleChoice extends Question {
 
     static fromSimple(obj) {
         const answers = Answer.mapAnswers(obj.answers)
-        return new MultipleChoice({ ...obj, answers })
+        return super.fromSimple({ ...obj, answers })
     }
 }

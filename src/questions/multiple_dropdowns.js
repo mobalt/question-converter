@@ -15,6 +15,6 @@ export class MultipleDropdowns extends Question {
 
     static fromSimple(obj) {
         const answers = Answer.mapAnswerGroups(obj.answers)
-        return new MultipleDropdowns({ ...obj, answers })
+        return super.fromSimple({ ...obj, answers })
     }
 }

@@ -19,6 +19,6 @@ export class TrueFalse extends Question {
             new Answer({ text: 'true', isCorrect: obj.answer }),
             new Answer({ text: 'false', isCorrect: !obj.answer }),
         ]
-        return new TrueFalse({ ...obj, answers })
+        return super.fromSimple({ ...obj, answers })
     }
 }

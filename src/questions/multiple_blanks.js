@@ -15,6 +15,6 @@ export class FillInMultipleBlanks extends Question {
 
     static fromSimple(obj) {
         const answers = Answer.mapAnswerGroups(obj.answers)
-        return new FillInMultipleBlanks({ ...obj, answers })
+        return super.fromSimple({ ...obj, answers })
     }
 }

@@ -14,6 +14,6 @@ export class Text extends Question {
     }
 
     static fromSimple(obj) {
-        return new Text({ ...obj, points: 0 })
+        return super.fromSimple({ ...obj, points: 0 })
     }
 }

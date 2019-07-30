@@ -15,6 +15,6 @@ export class MultipleAnswers extends Question {
 
     static fromSimple(obj) {
         const answers = Answer.mapAnswers(obj.answers)
-        return new MultipleAnswers({ ...obj, answers })
+        return super.fromSimple({ ...obj, answers })
     }
 }
