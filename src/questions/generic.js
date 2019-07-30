@@ -110,3 +110,10 @@ function convert(template) {
         return newObj
     }
 }
+const canvasAnswer = convert({
+    text: ['text', 'html'],
+    comments: ['comments', 'comments_html'],
+    group: ['blank_id'],
+    id: ['id'],
+    isCorrect: obj => !!obj.weight,
+})
