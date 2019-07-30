@@ -21,16 +21,12 @@ export class Question {
     }
 
     static fromSimple(obj) {
-        return null
+        return new this(obj)
     }
 
     static fromCanvas(obj) {
-        if (obj.question_type in t) {
-            console.log('returning ', obj.question_type, t[obj.question_type])
-            return new t[obj.question_type](obj.question_text)
-        } else {
-            //return new MultipleChoice('Test')
-        }
+        const simpleObj = canvasQuestion(obj)
+        return new this(simpleObj)
     }
 
     addAnswer(text = '', isCorrect = false) {}
