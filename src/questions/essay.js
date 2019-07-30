@@ -13,7 +13,4 @@ export class Essay extends Question {
         return 'Essay'
     }
 
-    static fromSimple(obj) {
-        return new Essay({ ...obj })
-    }
 }
