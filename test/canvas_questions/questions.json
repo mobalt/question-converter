@@ -469,7 +469,7 @@
     "position": null,
     "question_name": "Text",
     "question_type": "text_only_question",
-    "question_text": "<p>This has no question.</p>\n<p>\u00a0</p>",
+    "question_text": "<p>This has no question.</p>",
     "points_possible": 0,
     "correct_comments": "",
     "incorrect_comments": "",

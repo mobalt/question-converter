@@ -3,20 +3,20 @@ import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { Text as QuestionType } from '../../src/questions/text'
 
-describe.skip('Text', () => {
+describe('Text', () => {
     const canvas_question_obj = canvas_questions[9]
     const question = QuestionType.fromCanvas(canvas_question_obj)
 
-    it.skip('is an instance of Text', function() {
+    it('is an instance of Text', function() {
         question.should.be.an.instanceOf(QuestionType)
     })
-    it.skip('has correct question label', function() {
-        question.should.have.property('text', 'Just text.')
+    it('has correct question label', function() {
+        question.should.have.property('text', '<p>This has no question.</p>')
     })
-    it.skip('has no answer items', function() {
-        should.not.exist(question.answers)
+    it('has no answer items', function() {
+        question.answers.should.be.empty
     })
-    it.skip('worth correct number of points', function() {
+    it('worth correct number of points', function() {
         question.should.have.property('points', 0)
     })
 })
