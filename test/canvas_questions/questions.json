@@ -1,0 +1,502 @@
+[
+  {
+    "id": 1,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 1,
+    "position": null,
+    "question_name": "Question1Name",
+    "question_type": "multiple_choice_question",
+    "question_text": "<p><strong>Bold</strong>, <em>Italics</em>, <span style=\"text-decoration: underline;\">Underline</span>.</p>",
+    "points_possible": 11.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [
+      {
+        "id": 5227,
+        "text": "Correct Ans",
+        "html": "",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0
+      },
+      {
+        "id": 7706,
+        "text": "Wrong 1",
+        "html": "",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      },
+      {
+        "id": 9981,
+        "text": "",
+        "html": "<p>Wrong 2<sup>2\u00a0</sup>= <strong>4</strong></p>",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      },
+      {
+        "id": 5997,
+        "text": "Wrong 3",
+        "html": "",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      },
+      {
+        "id": 8180,
+        "text": "Wrong 4",
+        "html": "",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      }
+    ],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 2,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 2,
+    "position": null,
+    "question_name": "Question2Name",
+    "question_type": "true_false_question",
+    "question_text": "<p>Is this true?</p>",
+    "points_possible": 2.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "<p><strong>Positive</strong> comment. :-)</p>",
+    "incorrect_comments_html": "<p><strong>Negative</strong> comment. :-(</p>",
+    "neutral_comments_html": "<p>General comment.</p>",
+    "answers": [
+      {
+        "comments": "",
+        "comments_html": "",
+        "text": "True",
+        "weight": 100,
+        "id": 8974
+      },
+      {
+        "comments": "",
+        "comments_html": "",
+        "text": "False",
+        "weight": 0,
+        "id": 9876
+      }
+    ],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 3,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 3,
+    "position": null,
+    "question_name": "Question3Name",
+    "question_type": "short_answer_question",
+    "question_text": "<p>Roses are _____.\u00a0</p>",
+    "points_possible": 1.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [
+      {
+        "id": 5611,
+        "text": "Red",
+        "comments": "",
+        "comments_html": "<p>Nice typical answer.</p>",
+        "weight": 100
+      },
+      {
+        "id": 989,
+        "text": "Smelly",
+        "comments": "",
+        "comments_html": "<p>Accurate.</p>",
+        "weight": 100
+      }
+    ],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 4,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 4,
+    "position": null,
+    "question_name": "Fill In Multiple Blanks",
+    "question_type": "fill_in_multiple_blanks_question",
+    "question_text": "<p><span>Roses <strong>are</strong> [color1], violets <strong>are</strong> [color2]</span></p>",
+    "points_possible": 1.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [
+      {
+        "id": 4356,
+        "text": "red",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0,
+        "blank_id": "color1"
+      },
+      {
+        "id": 8988,
+        "text": "blue",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0,
+        "blank_id": "color2"
+      },
+      {
+        "id": 6053,
+        "text": "violet",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0,
+        "blank_id": "color2"
+      }
+    ],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 5,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 5,
+    "position": null,
+    "question_name": "Multiple Answers",
+    "question_type": "multiple_answers_question",
+    "question_text": "<p>Solve. <img class=\"equation_image\" title=\"\\sqrt{4}=?\" src=\"http://fake.instructure.com/equation_images/%255Csqrt%257B4%257D%253D%253F\" alt=\"LaTeX: \\sqrt{4}=?\" data-equation-content=\"\\sqrt{4}=?\"></p>",
+    "points_possible": 4.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [
+      {
+        "id": 6038,
+        "text": "",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      },
+      {
+        "id": 5131,
+        "text": "",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      },
+      {
+        "id": 5414,
+        "text": "2",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0
+      },
+      {
+        "id": 2710,
+        "text": "-2",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0
+      },
+      {
+        "id": 4224,
+        "text": "4",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      },
+      {
+        "id": 3390,
+        "text": "1",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0
+      },
+      {
+        "id": 2691,
+        "text": "",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0,
+        "html": "<p><img class=\"equation_image\" title=\"2i\" src=\"http://fake.instructure.com/equation_images/2i\" alt=\"LaTeX: 2i\" data-equation-content=\"2i\" x-canvaslms-safe-mathml='&lt;math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/math&gt;'></p>"
+      }
+    ],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 6,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 6,
+    "position": null,
+    "question_name": "Multiple Dropdowns",
+    "question_type": "multiple_dropdowns_question",
+    "question_text": "<p><span>Roses are [color1], violets are [color2]</span></p>",
+    "points_possible": 1.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [
+      {
+        "id": 334,
+        "text": "red",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0,
+        "blank_id": "color1"
+      },
+      {
+        "id": 7106,
+        "text": "black",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0,
+        "blank_id": "color1"
+      },
+      {
+        "id": 2559,
+        "text": "brown",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0,
+        "blank_id": "color1"
+      },
+      {
+        "id": 6714,
+        "text": "blue",
+        "comments": "",
+        "comments_html": "",
+        "weight": 100.0,
+        "blank_id": "color2"
+      },
+      {
+        "id": 731,
+        "text": "purple (no html)",
+        "comments": "",
+        "comments_html": "",
+        "weight": 0.0,
+        "blank_id": "color2"
+      }
+    ],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 7,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 7,
+    "position": null,
+    "question_name": "Question",
+    "question_type": "matching_question",
+    "question_text": "<p>Match these</p>",
+    "points_possible": 1.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [
+      {
+        "id": 994,
+        "text": "",
+        "left": "",
+        "right": "",
+        "comments": "",
+        "comments_html": "",
+        "match_id": 7733
+      },
+      {
+        "id": 9318,
+        "text": "",
+        "left": "",
+        "right": "",
+        "comments": "",
+        "comments_html": "",
+        "match_id": 7733
+      },
+      {
+        "id": 8558,
+        "text": "left",
+        "left": "left",
+        "right": "right1",
+        "comments": "",
+        "comments_html": "",
+        "match_id": 7170
+      },
+      {
+        "id": 8362,
+        "text": "left",
+        "left": "left",
+        "right": "right2",
+        "comments": "",
+        "comments_html": "",
+        "match_id": 119
+      },
+      {
+        "id": 5256,
+        "text": "left2",
+        "left": "left2",
+        "right": "right2",
+        "comments": "",
+        "comments_html": "",
+        "match_id": 119
+      },
+      {
+        "id": 4956,
+        "text": "one",
+        "left": "one",
+        "right": "",
+        "comments": "",
+        "comments_html": "",
+        "match_id": 7733
+      },
+      {
+        "id": 7172,
+        "text": "",
+        "left": "",
+        "right": "two",
+        "comments": "",
+        "comments_html": "",
+        "match_id": 2146
+      }
+    ],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": [
+      { "text": "", "match_id": 7733 },
+      { "text": "right1", "match_id": 7170 },
+      { "text": "right2", "match_id": 119 },
+      { "text": "two", "match_id": 2146 },
+      { "text": "distractor", "match_id": 5291 },
+      { "text": "other distractor", "match_id": 8233 },
+      { "text": "last distractor", "match_id": 9837 }
+    ],
+    "matching_answer_incorrect_matches": "distractor\nother distractor\nlast distractor"
+  },
+  {
+    "id": 8,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 8,
+    "position": null,
+    "question_name": "Essay",
+    "question_type": "essay_question",
+    "question_text": "<p>Type an essay.</p>",
+    "points_possible": 1.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 9,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": 9,
+    "position": null,
+    "question_name": "File Upload",
+    "question_type": "file_upload_question",
+    "question_text": "<p>Upload your <strong>docx</strong> file.</p>",
+    "points_possible": 1.0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  },
+  {
+    "id": 10,
+    "quiz_id": 2,
+    "quiz_group_id": null,
+    "assessment_question_id": null,
+    "position": null,
+    "question_name": "Text",
+    "question_type": "text_only_question",
+    "question_text": "<p>This has no question.</p>\n<p>\u00a0</p>",
+    "points_possible": 0,
+    "correct_comments": "",
+    "incorrect_comments": "",
+    "neutral_comments": "",
+    "correct_comments_html": "",
+    "incorrect_comments_html": "",
+    "neutral_comments_html": "",
+    "answers": [],
+    "variables": null,
+    "formulas": null,
+    "answer_tolerance": null,
+    "formula_decimal_places": null,
+    "matches": null,
+    "matching_answer_incorrect_matches": null
+  }
+]
