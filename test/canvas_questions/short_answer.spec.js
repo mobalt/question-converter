@@ -16,15 +16,10 @@ describe('Short Answer', () => {
     it('has correct number of answers', () => {
         question.answers.should.have.lengthOf(2)
     })
-    it('correct answers are identified', () => {
-        question.answers.forEach(ans => {
-            ans.isCorrect.should.be.true
-        })
-    })
-    it('wrong answers are identified', () => {
-        question.answers.forEach(ans => {
-            ans.isCorrect.should.not.be.false
-        })
+    it('has all answers correct', () => {
+        const [a, b] = question.answers
+        a.isCorrect.should.be.true
+        b.isCorrect.should.be.true
     })
     it('is worth 1 points', () => {
         question.points.should.equal(1)

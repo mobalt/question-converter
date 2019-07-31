@@ -16,14 +16,10 @@ describe('True/False', () => {
     it('has correct number of answers', function() {
         question.answers.should.have.lengthOf(2)
     })
-    it('correct answers are labelled as such', function() {
+    it('has only one answer labelled correct', function() {
         const [t, f] = question.answers
 
         t.isCorrect.should.be.true
-    })
-    it('wrong answers work', function() {
-        const [t, f] = question.answers
-
         f.isCorrect.should.be.false
     })
     it('worth correct number of points', function() {

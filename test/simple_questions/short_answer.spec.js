@@ -19,15 +19,14 @@ describe('Short Answer', () => {
     it('has correct number of answers', () => {
         question.answers.length.should.equal(4)
     })
-    it('correct answers are identified', () => {
-        question.answers.forEach(ans => {
-            ans.isCorrect.should.be.true
-        })
-    })
-    it('wrong answers are identified', () => {
-        question.answers.forEach(ans => {
-            ans.isCorrect.should.not.be.false
-        })
+    it('all answers are labelled correct', () => {
+        question.answers.should.have.lengthOf(4)
+        const [a, b, c, d] = question.answers
+
+        a.isCorrect.should.be.true
+        b.isCorrect.should.be.true
+        c.isCorrect.should.be.true
+        d.isCorrect.should.be.true
     })
     it('is worth 1 points', () => {
         question.points.should.equal(1)
