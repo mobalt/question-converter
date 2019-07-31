@@ -21,10 +21,10 @@ describe('Multiple Dropdowns', () => {
         question.should.have.property('text', 'Roses = [d1], Violets = [d2]')
     })
     it('has correct number of answer groups', () => {
-        Object.values(question.answers).length.should.equal(2)
+        Object.values(question.answerObj).length.should.equal(2)
     })
     it('d1 is correct', () => {
-        const { d1 } = question.answers
+        const { d1 } = question.answerObj
         d1.length.should.equal(3)
 
         const [a, b, c] = d1
@@ -33,7 +33,7 @@ describe('Multiple Dropdowns', () => {
         c.isCorrect.should.be.false
     })
     it('d2 is correct', () => {
-        const { d2 } = question.answers
+        const { d2 } = question.answerObj
         d2.length.should.equal(4)
 
         const [a, b, c, d] = d2

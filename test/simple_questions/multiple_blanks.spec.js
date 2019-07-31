@@ -23,15 +23,15 @@ describe('Fill In Multiple Blanks', () => {
         )
     })
     it('has correct number of answer groups', () => {
-        Object.keys(question.answers).length.should.equal(2)
+        Object.keys(question.answerObj).length.should.equal(2)
     })
     it('color1 has 3 answers', () => {
-        question.answers.should.have.property('color1')
-        question.answers.color1.length.should.equal(3)
+        question.answerObj.should.have.property('color1')
+        question.answerObj.color1.length.should.equal(3)
     })
     it('color2 has 2 answers', () => {
-        question.answers.should.have.property('color2')
-        question.answers.color2.length.should.equal(2)
+        question.answerObj.should.have.property('color2')
+        question.answerObj.color2.length.should.equal(2)
     })
     it('is worth 1 points', () => {
         question.should.have.property('points', 1)
