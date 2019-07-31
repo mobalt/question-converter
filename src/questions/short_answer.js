@@ -15,8 +15,10 @@ export class ShortAnswer extends Question {
     }
 
     static fromSimple(obj) {
-        const answers = Answer.mapAnswers(obj.answers)
-        answers.forEach(ans => ans.setCorrect())
+        // const answers = Answer.mapAnswers(obj.answers)
+        // answers.forEach(ans => ans.setCorrect())
+
+        const answers = Answer.answerList(obj.answers, undefined, true)
         return super.fromSimple({ ...obj, answers })
     }
 }
