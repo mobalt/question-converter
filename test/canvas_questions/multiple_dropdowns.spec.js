@@ -3,15 +3,18 @@ import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { MultipleDropdowns as QuestionType } from '../../src/questions/multiple_dropdowns'
 
-describe.skip('Multiple Dropdowns', () => {
+describe('Multiple Dropdowns', () => {
     const canvas_question_obj = canvas_questions[5]
     const question = QuestionType.fromCanvas(canvas_question_obj)
 
-    it.skip('is an instance of MultipleDropdowns', () => {
+    it('is an instance of MultipleDropdowns', () => {
         question.should.be.an.instanceOf(QuestionType)
     })
-    it.skip('has correct prompt', () => {
-        question.should.have.property('text', 'Roses = [d1], Violets = [d2]')
+    it('has correct prompt', () => {
+        question.should.have.property(
+            'text',
+            '<p><span>Roses are [color1], violets are [color2]</span></p>',
+        )
     })
     it.skip('has correct number of answer groups', () => {
         Object.values(question.answers).length.should.equal(2)
@@ -35,7 +38,7 @@ describe.skip('Multiple Dropdowns', () => {
         c.isCorrect.should.be.false
         d.isCorrect.should.be.false
     })
-    it.skip('is worth 1 point', () => {
+    it('is worth 1 point', () => {
         question.should.have.property('points', 1)
     })
 })
