@@ -4,6 +4,7 @@ export class Question {
         this.name = name
         this.points = points
         this.answers = answers
+        this.forceCorrect = false
     }
 
     get type() {
@@ -53,6 +54,23 @@ export class Answer {
             isCorrect = !!result[1]
 
         return new Answer({ text, isCorrect })
+    }
+
+    static answerList(list, group, forceCorrect = false) {
+        // answersObj[] --> Answer[]
+        if (Array.isArray(list)) {
+            return list.map(ans => safeAnswerItem(ans, group, forceCorrect))
+
+            // {groupName: answersObj[]} --> Answer[]
+        } else if (typeof list == 'object') {
+            return [].concat(
+                ...Object.entries(list).map(([group, list]) => {
+                    return this.answerList(list, group, forceCorrect)
+                }),
+            )
+        } else {
+            return []
+        }
     }
 
     static mapAnswers(a) {
@@ -123,3 +141,23 @@ const canvasQuestion = convert({
     neutral_comments: ['neutral_comments', 'neutral_comments_html'],
     answers: obj => obj.answers.map(canvasAnswer),
 })
+
+function parseAnswerText(answer) {
+    answer = answer ? answer.toString() : ''
+    const pattern = /^(~ *)?(.+)$/
+    const result = pattern.exec(answer.trim())
+    const text = result[2],
+        isCorrect = !!result[1]
+
+    return { text, isCorrect }
+}
+
+function safeAnswerItem(item, group, forceCorrect = false) {
+    const result =
+        typeof item == 'object'
+            ? { group, ...item, ...parseAnswerText(item.text) }
+            : { group, ...parseAnswerText(item) }
+
+    if (forceCorrect) result.isCorrect = true
+    return new Answer(result)
+}
