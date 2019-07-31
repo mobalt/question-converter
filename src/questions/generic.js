@@ -34,7 +34,8 @@ export class Question {
     }
 
     static fromSimple(obj) {
-        return new this(obj)
+        const answers = Answer.answerList(obj.answers)
+        return new this({ ...obj, answers })
     }
 
     static fromCanvas(obj) {
@@ -151,6 +152,6 @@ function safeAnswerItem(item, group, forceCorrect = false) {
             ? { group, ...item, ...parseAnswerText(item.text) }
             : { group, ...parseAnswerText(item) }
 
-    if (forceCorrect) result.isCorrect = true
+    if (forceCorrect || item.isCorrect) result.isCorrect = true
     return new Answer(result)
 }
