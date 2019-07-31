@@ -12,10 +12,4 @@ export class FillInMultipleBlanks extends Question {
     static get type() {
         return 'Multiple Blanks'
     }
-
-    static fromSimple(obj) {
-        // const answers = Answer.mapAnswerGroups(obj.answers)
-        const answers = Answer.answerList(obj.answers)
-        return super.fromSimple({ ...obj, answers })
-    }
 }

@@ -12,5 +12,4 @@ export class Essay extends Question {
     static get type() {
         return 'Essay'
     }
-
 }

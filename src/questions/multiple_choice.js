@@ -12,10 +12,4 @@ export class MultipleChoice extends Question {
     static get type() {
         return 'Multiple Choice'
     }
-
-    static fromSimple(obj) {
-        // const answers = Answer.mapAnswers(obj.answers)
-        const answers = Answer.answerList(obj.answers)
-        return super.fromSimple({ ...obj, answers })
-    }
 }
