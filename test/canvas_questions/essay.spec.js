@@ -3,23 +3,23 @@ import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { Essay as QuestionType } from '../../src/questions/essay'
 
-describe.skip('Essay', () => {
+describe('Essay', () => {
     const canvas_question_obj = canvas_questions[7]
     const question = QuestionType.fromCanvas(canvas_question_obj)
 
-    it.skip('is correct instance', function() {
+    it('is correct instance', function() {
         question.should.be.an.instanceOf(QuestionType)
     })
 
-    it.skip('has correct question label', function() {
-        question.should.have.property('text', 'Write a 500-word essay below:')
+    it('has correct question label', function() {
+        question.should.have.property('text', '<p>Type an essay.</p>')
     })
 
-    it.skip('has no answer items', function() {
-        should.not.exist(question.answers)
+    it('has no answer items', function() {
+        question.answers.length.should.equal(0)
     })
 
-    it.skip('worth correct number of points', function() {
+    it('worth correct number of points', function() {
         question.should.have.property('points', 1)
     })
 })
