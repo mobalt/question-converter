@@ -14,12 +14,12 @@ describe('Essay', () => {
         question.should.be.an.instanceOf(Essay)
     })
     it('has correct question label', function() {
-        question.should.have.property('text', 'Write a 500-word essay below:')
+        question.text.should.equal('Write a 500-word essay below:')
     })
     it('has no answer items', function() {
-        should.not.exist(question.answers)
+        question.answers.should.be.empty
     })
     it('worth correct number of points', function() {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

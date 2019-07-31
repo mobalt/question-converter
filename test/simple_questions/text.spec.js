@@ -14,12 +14,12 @@ describe('Text', () => {
         question.should.be.an.instanceOf(Text)
     })
     it('has correct question label', function() {
-        question.should.have.property('text', 'Just text.')
+        question.text.should.equal('Just text.')
     })
     it('has no answer items', function() {
-        should.not.exist(question.answers)
+        question.answers.should.be.empty
     })
     it('worth correct number of points', function() {
-        question.should.have.property('points', 0)
+        question.points.should.equal(0)
     })
 })

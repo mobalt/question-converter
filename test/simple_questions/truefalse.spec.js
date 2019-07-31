@@ -14,7 +14,7 @@ describe('True/False', () => {
         question.should.be.an.instanceOf(TrueFalse)
     })
     it('has correct question label', function() {
-        question.should.have.property('text', 'Is this true?')
+        question.text.should.equal('Is this true?')
     })
     it('has correct number of answers', function() {
         question.answers.length.should.equal(2)
@@ -30,6 +30,6 @@ describe('True/False', () => {
         f.isCorrect.should.be.false
     })
     it('worth correct number of points', function() {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

@@ -11,10 +11,10 @@ describe('Short Answer', () => {
         question.should.be.an.instanceOf(QuestionType)
     })
     it('has correct prompt', () => {
-        question.should.have.property('text', '<p>Roses are _____. </p>')
+        question.text.should.equal('<p>Roses are _____. </p>')
     })
     it('has correct number of answers', () => {
-        question.answers.length.should.equal(2)
+        question.answers.should.have.lengthOf(2)
     })
     it('correct answers are identified', () => {
         question.answers.forEach(ans => {
@@ -27,6 +27,6 @@ describe('Short Answer', () => {
         })
     })
     it('is worth 1 points', () => {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

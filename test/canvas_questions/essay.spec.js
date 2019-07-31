@@ -12,14 +12,14 @@ describe('Essay', () => {
     })
 
     it('has correct question label', function() {
-        question.should.have.property('text', '<p>Type an essay.</p>')
+        question.text.should.equal('<p>Type an essay.</p>')
     })
 
     it('has no answer items', function() {
-        question.answers.length.should.equal(0)
+        question.answers.should.be.empty
     })
 
     it('worth correct number of points', function() {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

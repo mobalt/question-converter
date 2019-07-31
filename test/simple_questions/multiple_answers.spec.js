@@ -15,28 +15,27 @@ describe('Multiple Answers', () => {
         question.should.be.an.instanceOf(MultipleAnswers)
     })
     it('has correct prompt', () => {
-        question.should.have.property(
-            'text',
+        question.text.should.equal(
             '<p> Two or more? <i>(select all that apply)</i></p>',
         )
     })
     it('has correct number of answers', () => {
-        question.answers.length.should.equal(5)
+        question.answers.should.have.lengthOf(5)
     })
     it('correct answers are identified', () => {
         const [a, b, c, d, e] = question.answers
 
-        b.should.have.property('isCorrect', true)
-        d.should.have.property('isCorrect', true)
+        b.isCorrect.should.be.true
+        d.isCorrect.should.be.true
     })
     it('wrong answers are identified', () => {
         const [a, b, c, d, e] = question.answers
 
-        a.should.have.property('isCorrect', false)
-        c.should.have.property('isCorrect', false)
-        e.should.have.property('isCorrect', false)
+        a.isCorrect.should.be.false
+        c.isCorrect.should.be.false
+        e.isCorrect.should.be.false
     })
     it('is worth 2 points', () => {
-        question.should.have.property('points', 2)
+        question.points.should.equal(2)
     })
 })

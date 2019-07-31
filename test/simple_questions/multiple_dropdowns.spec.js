@@ -18,7 +18,7 @@ describe('Multiple Dropdowns', () => {
         question.should.be.an.instanceOf(MultipleDropdowns)
     })
     it('has correct prompt', () => {
-        question.should.have.property('text', 'Roses = [d1], Violets = [d2]')
+        question.text.should.equal('Roses = [d1], Violets = [d2]')
     })
     it('has correct number of answer groups', () => {
         Object.values(question.answerObj).length.should.equal(2)
@@ -28,7 +28,7 @@ describe('Multiple Dropdowns', () => {
         d1.length.should.equal(3)
 
         const [a, b, c] = d1
-        a.should.have.property('isCorrect', true)
+        a.isCorrect.should.be.true
         b.isCorrect.should.be.false
         c.isCorrect.should.be.false
     })
@@ -37,12 +37,12 @@ describe('Multiple Dropdowns', () => {
         d2.length.should.equal(4)
 
         const [a, b, c, d] = d2
-        a.should.have.property('isCorrect', true)
+        a.isCorrect.should.be.true
         b.isCorrect.should.be.false
         c.isCorrect.should.be.false
         d.isCorrect.should.be.false
     })
     it('is worth 1 point', () => {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

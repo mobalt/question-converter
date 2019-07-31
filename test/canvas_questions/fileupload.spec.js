@@ -11,15 +11,14 @@ describe('FileUpload', () => {
         question.should.be.an.instanceOf(QuestionType)
     })
     it('has correct question label', function() {
-        question.should.have.property(
-            'text',
+        question.text.should.equal(
             '<p>Upload your <strong>docx</strong> file.</p>',
         )
     })
-    it('has correct number of answers', function() {
+    it('has no answer items', function() {
         question.answers.should.be.empty
     })
     it('worth correct number of points', function() {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

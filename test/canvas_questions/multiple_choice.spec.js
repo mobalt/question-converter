@@ -12,8 +12,7 @@ describe('Multiple Choice', () => {
     })
 
     it('has correct prompt', () => {
-        question.should.have.property(
-            'text',
+        question.text.should.equal(
             '<p><strong>Bold</strong>, <em>Italics</em>, <span style="text-decoration: underline;">Underline</span>.</p>',
         )
     })
@@ -25,7 +24,7 @@ describe('Multiple Choice', () => {
     it('correct answers are identified', () => {
         const [a] = question.answers
 
-        a.should.have.property('isCorrect', true)
+        a.isCorrect.should.be.true
     })
 
     it('wrong answers are identified', () => {
@@ -37,7 +36,7 @@ describe('Multiple Choice', () => {
         e.isCorrect.should.be.false
     })
 
-    it('is worth 1 point', () => {
-        question.should.have.property('points', 11)
+    it('is worth 11 points', () => {
+        question.points.should.equal(11)
     })
 })

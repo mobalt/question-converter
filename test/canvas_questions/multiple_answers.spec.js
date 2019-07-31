@@ -11,28 +11,27 @@ describe('Multiple Answers', () => {
         question.should.be.an.instanceOf(QuestionType)
     })
     it('has correct prompt', () => {
-        question.should.have.property(
-            'text',
+        question.text.should.equal(
             '<p>Solve. <img class="equation_image" title="\\sqrt{4}=?" src="http://fake.instructure.com/equation_images/%255Csqrt%257B4%257D%253D%253F" alt="LaTeX: \\sqrt{4}=?" data-equation-content="\\sqrt{4}=?"></p>',
         )
     })
     it('has correct number of answers', () => {
-        question.answers.length.should.equal(5)
+        question.answers.should.have.lengthOf(5)
     })
     it('correct answers are identified', () => {
         const [a, b, c, d, e] = question.answers
 
-        a.should.have.property('isCorrect', true)
-        b.should.have.property('isCorrect', true)
+        a.isCorrect.should.be.true
+        b.isCorrect.should.be.true
     })
     it('wrong answers are identified', () => {
         const [a, b, c, d, e] = question.answers
 
-        c.should.have.property('isCorrect', false)
-        d.should.have.property('isCorrect', false)
-        e.should.have.property('isCorrect', false)
+        c.isCorrect.should.be.false
+        d.isCorrect.should.be.false
+        e.isCorrect.should.be.false
     })
     it('is worth 4 points', () => {
-        question.should.have.property('points', 4)
+        question.points.should.equal(4)
     })
 })

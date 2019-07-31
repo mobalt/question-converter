@@ -14,10 +14,7 @@ describe('Short Answer', () => {
         question.should.be.an.instanceOf(ShortAnswer)
     })
     it('has correct prompt', () => {
-        question.should.have.property(
-            'text',
-            'What is one of the first two numbers?',
-        )
+        question.text.should.equal('What is one of the first two numbers?')
     })
     it('has correct number of answers', () => {
         question.answers.length.should.equal(4)
@@ -33,6 +30,6 @@ describe('Short Answer', () => {
         })
     })
     it('is worth 1 points', () => {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

@@ -16,7 +16,7 @@ describe('Multiple Choice', () => {
         question.should.be.an.instanceOf(MultipleChoice)
     })
     it('has correct prompt', () => {
-        question.should.have.property('text', '<p> Multiple Choice Text </p>')
+        question.text.should.equal('<p> Multiple Choice Text </p>')
     })
     it('has correct number of answers', () => {
         question.answers.length.should.equal(3)
@@ -24,7 +24,7 @@ describe('Multiple Choice', () => {
     it('correct answers are identified', () => {
         const [a, b, c] = question.answers
 
-        a.should.have.property('isCorrect', true)
+        a.isCorrect.should.be.true
     })
     it('wrong answers are identified', () => {
         const [a, b, c] = question.answers
@@ -33,6 +33,6 @@ describe('Multiple Choice', () => {
         c.isCorrect.should.be.false
     })
     it('is worth 1 point', () => {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })

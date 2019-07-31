@@ -17,8 +17,7 @@ describe('Fill In Multiple Blanks', () => {
         question.should.be.an.instanceOf(FillInMultipleBlanks)
     })
     it('has correct prompt', () => {
-        question.should.have.property(
-            'text',
+        question.text.should.equal(
             '<p>Roses are [color1], violets are [color2]</p>',
         )
     })
@@ -34,6 +33,6 @@ describe('Fill In Multiple Blanks', () => {
         question.answerObj.color2.length.should.equal(2)
     })
     it('is worth 1 points', () => {
-        question.should.have.property('points', 1)
+        question.points.should.equal(1)
     })
 })
