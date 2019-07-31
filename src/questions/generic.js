@@ -7,6 +7,18 @@ export class Question {
         this.forceCorrect = false
     }
 
+    get answerObj() {
+        const obj = {}
+        for (let ans of this.answers) {
+            if (obj[ans.group]) {
+                obj[ans.group].push(ans)
+            } else {
+                obj[ans.group] = [ans]
+            }
+        }
+        return obj
+    }
+
     get type() {
         return toSnakeCase(this.constructor.name) + '_question'
     }
