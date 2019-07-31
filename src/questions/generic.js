@@ -84,25 +84,6 @@ export class Answer {
             return []
         }
     }
-
-    static mapAnswers(a) {
-        return a.map(ans => {
-            if (typeof ans === 'object') {
-                //todo: extract other properties
-                return this.parseAnswer(ans.text)
-            } else {
-                // must be 'string'
-                return this.parseAnswer(ans)
-            }
-        })
-    }
-    static mapAnswerGroups(obj) {
-        const answers = {}
-        for (let answerGroup in obj) {
-            answers[answerGroup] = this.mapAnswers(obj[answerGroup])
-        }
-        return answers
-    }
 }
 
 function get_first_nonempty_field(obj, fields) {
