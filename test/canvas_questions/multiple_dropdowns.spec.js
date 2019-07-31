@@ -15,29 +15,32 @@ describe('Multiple Dropdowns', () => {
             '<p><span>Roses are [color1], violets are [color2]</span></p>',
         )
     })
-    it.skip('has correct number of answer groups', () => {
-        Object.values(question.answers).length.should.equal(2)
+    it('has correct number of total answers', () => {
+        question.answers.should.have.lengthOf(5)
     })
-    it.skip('d1 is correct', () => {
-        const { d1 } = question.answers
-        d1.length.should.equal(3)
+    it('has correct answer groups', () => {
+        question.answerObj.should.be
+            .an('object')
+            .that.has.all.keys('color1', 'color2')
+    })
+    it('color1 group is correct', () => {
+        const sublist = question.answerObj.color1
+
+        sublist.should.have.lengthOf(3)
 
         const [a, b, c] = sublist
         a.isCorrect.should.be.true
         b.isCorrect.should.be.false
         c.isCorrect.should.be.false
     })
-    it.skip('d2 is correct', () => {
-        const { d2 } = question.answers
-        d2.length.should.equal(4)
+    it('color2 group is correct', () => {
+        const sublist = question.answerObj.color2
 
         sublist.should.have.lengthOf(2)
 
         const [a, b] = sublist
         a.isCorrect.should.be.true
         b.isCorrect.should.be.false
-        c.isCorrect.should.be.false
-        d.isCorrect.should.be.false
     })
     it('is worth 1 point', () => {
         question.points.should.equal(1)

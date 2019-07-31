@@ -15,12 +15,13 @@ describe('Fill In Multiple Blanks', () => {
             '<p><span>Roses <strong>are</strong> [color1], violets <strong>are</strong> [color2]</span></p>',
         )
     })
-    it('has correct number of answer groups', () => {
-        Object.keys(question.answers).length.should.equal(3)
+    it('has correct number of total answers', () => {
+        question.answers.should.have.lengthOf(3)
     })
-    it.skip('color1 has 3 answers', () => {
-        question.answers.should.have.property('color1')
-        question.answers.color1.length.should.equal(3)
+    it('has correct answer groups', () => {
+        question.answerObj.should.be
+            .an('object')
+            .that.has.all.keys('color1', 'color2')
     })
     it('color1 has 1 answers', () => {
         question.answerObj.color1.should.have.lengthOf(1)
