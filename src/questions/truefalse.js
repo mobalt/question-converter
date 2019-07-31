@@ -16,8 +16,8 @@ export class TrueFalse extends Question {
     static fromSimple(obj) {
         //todo: make sure answer/answers doesn't cause problems
         const answers = [
-            new Answer({ text: 'true', isCorrect: obj.answer }),
-            new Answer({ text: 'false', isCorrect: !obj.answer }),
+            { text: 'True', isCorrect: obj.answer },
+            { text: 'False', isCorrect: !obj.answer },
         ]
         return super.fromSimple({ ...obj, answers })
     }
