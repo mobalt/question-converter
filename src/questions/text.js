@@ -3,6 +3,7 @@ import { Question, Answer } from './generic'
 export class Text extends Question {
     constructor(a) {
         super(a)
+        this.points = 0
     }
 
     static get canvas_type() {
@@ -11,9 +12,5 @@ export class Text extends Question {
 
     static get type() {
         return 'Text'
-    }
-
-    static fromSimple(obj) {
-        return super.fromSimple({ ...obj, points: 0 })
     }
 }
