@@ -157,6 +157,19 @@ function oneToOne(right) {
     }
 }
 
+function textHtml(textName, htmlName) {
+    if (!htmlName) htmlName = textName + '_html'
+
+    return {
+        forward(obj, leftPropName) {
+            return {}
+        },
+        backward(obj, leftPropName) {
+            return {}
+        },
+    }
+}
+
 const canvasAnswer = convert({
     text: ['text', 'html'],
     comments: ['comments', 'comments_html'],
@@ -167,6 +180,8 @@ const canvasAnswer = convert({
 const canvasAnswer2 = transform({
     id: 'id',
     group: 'blank_id',
+    comments: textHtml('comments'),
+    text: textHtml('text', 'html'),
     isCorrect: {
         forward(obj) {
             return {
@@ -197,6 +212,9 @@ const canvasQuestion2 = transform({
     points: 'points_possible',
     text: 'question_text',
     type: 'question_type',
+    correct_comments: textHtml('correct_comments'),
+    incorrect_comments: textHtml('incorrect_comments'),
+    neutral_comments: textHtml('neutral_comments'),
     answers: {
         forward(obj) {
             return {
