@@ -39,5 +39,57 @@ describe('Essay', () => {
         })
     })
 
+    describe('#toCanvas', () => {
+        const Answer = qs.internal.Answer
+        const question = new qs.types.Essay({
+            name: 'Essay Question',
+            text: 'Write an essay:',
+            answers: [],
+            question_type: 'essay_question',
+            correct_comments: 'Correct Text',
+            incorrect_comments: '<b>Incorrect</b> html',
+        })
+        const canvasObj = qs.toCanvas(question)
+
+        describe('The canvas object', () => {
+            it('is a normal javascript object', () => {
+                canvasObj.should.be.an.instanceOf(Object)
+            })
+
+            it('has 0 answers', () => {
+                canvasObj.answers.should.be.an('array').but.empty
+            })
+
+            it('has canvas specific question_type', () => {
+                canvasObj.question_type.should.equal('essay_question')
+            })
+
+            it('has #oneToOne fields', () => {
+                canvasObj.should.include({
+                    question_text: 'Write an essay:',
+                    points_possible: 1,
+                    question_name: 'Essay Question',
+                })
+            })
+
+            describe('has #textHtml fields', () => {
+                it('included fields', () => {
+                    canvasObj.should.include({
+                        correct_comments: 'Correct Text',
+                        incorrect_comments_html: '<b>Incorrect</b> html',
+                    })
+                })
+
+                it('excluded fields', () => {
+                    canvasObj.should.not.have.any.keys(
+                        'correct_comments_html',
+                        'incorrect_comments',
+                        'neutral_comments',
+                        'neutral_comments_html',
+                    )
+                })
+            })
+        })
+    })
 
 })
