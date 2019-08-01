@@ -162,11 +162,25 @@ function textHtml(textName, htmlName) {
 
     return {
         forward(obj, leftPropName) {
-            return {}
+            return {
+                [leftPropName]:
+                    obj[textName] == '' ? obj[htmlName] : obj[textName],
+            }
         },
         backward(obj, leftPropName) {
-            return {}
+            const value = obj[leftPropName]
+            if (isDefined(value)) {
+                return {
+                    [containsHTML(value) ? htmlName : textName]: value.trim(),
+                }
+            } else {
+                return { [textName]: '' }
+            }
         },
+    }
+
+    function containsHTML(str) {
+        return /<([^>]+)>/.test(str)
     }
 }
 
