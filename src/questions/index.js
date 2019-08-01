@@ -68,16 +68,6 @@ function QfromCanvas(obj) {
     // return new this(simpleObj)
 }
 
-function parseAnswer(answer) {
-    answer = answer.toString()
-    const pattern = /^(~ *)?(.+)$/
-    const result = pattern.exec(answer.trim())
-    const text = result[2],
-        isCorrect = !!result[1]
-
-    return new Answer({ text, isCorrect })
-}
-
 function answerList(list, group, forceCorrect = false) {
     // answersObj[] --> Answer[]
     if (Array.isArray(list)) {
@@ -216,4 +206,3 @@ function safeAnswerItem(item, group, forceCorrect = false) {
     if (forceCorrect || item.isCorrect) result.isCorrect = true
     return new Answer(result)
 }
-
