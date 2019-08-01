@@ -130,8 +130,8 @@ function transform(template) {
         }
     })
 
-    return function(obj) {
-        // execute
+    return function(obj, reverse = false) {
+        const direction = reverse ? 'backward' : 'forward'
         const parts = transformations.map(([leftName, fnObj]) => {
             return fnObj[direction](obj, leftName)
         })
