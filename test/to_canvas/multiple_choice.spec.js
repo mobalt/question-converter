@@ -39,8 +39,21 @@ describe.only('Multiple Choice', () => {
             it('is a normal javascript object', () => {
                 canvasObj.should.be.an.instanceOf(Object)
             })
+
+            it('has 3 answers', () => {
+                canvasObj.answers.should.be.an('array').with.lengthOf(3)
+            })
+
         })
 
+        describe('The canvas answer objects', () => {
+            const [a, b, c] = canvasObj.answers
+
+            it('are basic javascript types', () => {
+                a.should.be.an.instanceOf(Object)
+                b.should.be.an.instanceOf(Object)
+                c.should.be.an.instanceOf(Object)
+            })
 
         })
     })
