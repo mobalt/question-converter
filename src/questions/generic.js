@@ -92,37 +92,6 @@ export class Answer {
     }
 }
 
-function get_first_nonempty_field(obj, fields) {
-    for (let i of fields) {
-        if (obj[i] !== '') {
-            return obj[i]
-        }
-    }
-    return null
-}
-
-function convert(template) {
-    return function(obj) {
-        const newObj = {}
-        for (let propName in template) {
-            const prop = template[propName]
-
-            let result = null
-            if (Array.isArray(prop)) {
-                result = get_first_nonempty_field(obj, prop)
-            } else if (typeof prop == 'string') {
-                result = obj[prop] !== '' ? obj[prop] : null
-            } else if (typeof prop == 'function') {
-                result = prop(obj)
-            } else {
-                throw new Error('Unexpected format')
-            }
-
-            newObj[propName] = result
-        }
-        return newObj
-    }
-}
 
 function transform(template) {
     const transformations = Object.entries(template).map(([left, right]) => {
@@ -187,14 +156,7 @@ function textHtml(textName, htmlName) {
     }
 }
 
-const canvasAnswer = convert({
-    text: ['text', 'html'],
-    comments: ['comments', 'comments_html'],
-    group: ['blank_id'],
-    id: ['id'],
-    isCorrect: obj => !!obj.weight,
-})
-const canvasAnswer2 = transform({
+const canvasAnswer = transform({
     id: 'id',
     group: 'blank_id',
     comments: textHtml('comments'),
@@ -213,17 +175,7 @@ const canvasAnswer2 = transform({
     },
 })
 
-const canvasQuestion = convert({
-    id: ['id'],
-    name: ['question_name'],
-    points: ['points_possible'],
-    text: ['question_text'],
-    correct_comments: ['correct_comments', 'correct_comments_html'],
-    incorrect_comments: ['incorrect_comments', 'incorrect_comments_html'],
-    neutral_comments: ['neutral_comments', 'neutral_comments_html'],
-    answers: obj => obj.answers.map(canvasAnswer),
-})
-const canvasQuestion2 = transform({
+const canvasQuestion = transform({
     id: 'id',
     name: 'question_name',
     points: 'points_possible',
