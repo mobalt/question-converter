@@ -2,6 +2,7 @@ import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { MultipleAnswers as QuestionType } from '../../src/questions/multiple_answers'
+import { Answer } from '../../src/questions/generic'
 
 describe('Multiple Answers', () => {
     const canvas_question_obj = canvas_questions[4]
@@ -17,6 +18,11 @@ describe('Multiple Answers', () => {
     })
     it('has correct number of answers', () => {
         question.answers.should.have.lengthOf(5)
+    })
+    it('all answers are instances of Answer', () => {
+        question.answers.forEach(ans => {
+            ans.should.be.instanceOf(Answer)
+        })
     })
     it('correct answers are identified', () => {
         const [a, b, c, d, e] = question.answers
