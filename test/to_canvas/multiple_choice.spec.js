@@ -48,6 +48,32 @@ describe.only('Multiple Choice', () => {
                 canvasObj.question_type.should.equal('multiple_choice_question')
             })
 
+            it('has #oneToOne fields', () => {
+                canvasObj.should.include({
+                    id: 999,
+                    question_text: '<p> Multiple Choice Text </p>',
+                    points_possible: 1,
+                    question_name: 'MC Question 1',
+                })
+            })
+
+            describe('has #textHtml fields', () => {
+                it('included fields', () => {
+                    canvasObj.should.include({
+                        correct_comments_html: '<b>Yay!</b>',
+                        incorrect_comments: 'Nay!',
+                    })
+                })
+
+                it('excluded fields', () => {
+                    canvasObj.should.not.include.keys([
+                        'correct_comments',
+                        'incorrect_comments_html',
+                        // TODO:
+                        //    'neutral_comments', 'neutral_comments_html'
+                    ])
+                })
+            })
         })
 
         describe('The canvas answer objects', () => {
