@@ -30,9 +30,6 @@ export class Question {
         return obj
     }
 
-    get type() {
-        return toSnakeCase(this.constructor.name) + '_question'
-    }
 
     static get canvas_type() {
         throw new Error("Don't use the internal Question class")
@@ -53,8 +50,6 @@ export class Question {
         const simpleObj = canvasQuestion(obj)
         return new this(simpleObj)
     }
-
-    addAnswer(text = '', isCorrect = false) {}
 }
 
 export class Answer {
@@ -64,10 +59,6 @@ export class Answer {
         this.group = group
         this.comments = comments
         this.id = id
-    }
-
-    setCorrect() {
-        this.isCorrect = true
     }
 
     static parseAnswer(answer) {
