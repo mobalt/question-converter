@@ -135,10 +135,20 @@ function transform(template) {
     }
 }
 
+function isDefined(value) {
+    return typeof value != 'undefined' && value != null
+}
+
 function oneToOne(right) {
     return {
-        forward(obj){return {}},
-        backward(obj){return {}},
+        forward: (obj, left) => propIfValue(left, obj[right]),
+        backward: (obj, left) => propIfValue(right, obj[left]),
+    }
+
+    function propIfValue(propName, value) {
+        const result = {}
+        if (isDefined(value)) result[propName] = value
+        return result
     }
 }
 
