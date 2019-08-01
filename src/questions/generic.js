@@ -29,9 +29,6 @@ export class Question {
         return obj
     }
 
-    toCanvas() {
-        return canvasQuestion(this, true)
-    }
     static get forceCorrect() {
         return false
     }
