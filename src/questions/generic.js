@@ -197,6 +197,16 @@ const canvasQuestion2 = transform({
     points: 'points_possible',
     text: 'question_text',
     type: 'question_type',
+    answers: {
+        forward(obj) {
+            return {
+                answers: obj.answers.map(o => new Answer(canvasAnswer(o))),
+            }
+        },
+        backward(obj) {
+            return { answers: obj.answers.map(o => canvasAnswer(o, true)) }
+        },
+    },
 })
 
 function parseAnswerText(answer) {
