@@ -30,6 +30,9 @@ export class Question {
         return obj
     }
 
+    toCanvas() {
+        return canvasQuestion(this, true)
+    }
 
     static get canvas_type() {
         throw new Error("Don't use the internal Question class")
