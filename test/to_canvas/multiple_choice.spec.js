@@ -44,6 +44,10 @@ describe.only('Multiple Choice', () => {
                 canvasObj.answers.should.be.an('array').with.lengthOf(3)
             })
 
+            it('has correct question_type', () => {
+                canvasObj.question_type.should.equal('multiple_choice_question')
+            })
+
         })
 
         describe('The canvas answer objects', () => {

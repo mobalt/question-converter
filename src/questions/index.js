@@ -9,6 +9,7 @@ import { MultipleDropdowns } from './multiple_dropdowns'
 import { ShortAnswer } from './short_answer'
 import { Text } from './text'
 import { TrueFalse } from './truefalse'
+import { conversions } from './conversions'
 
 const types = {
     Essay,
@@ -208,7 +209,9 @@ export default {
     fromSimple: QfromSimple,
     fromCanvas: QfromCanvas,
     toCanvas(question) {
-        return canvasQuestion(question, true)
+        const canvasObj = canvasQuestion(question, true)
+        canvasObj.question_type = conversions[question.constructor.name].canvas
+        return canvasObj
     },
     toSimple(question) {
         return {
