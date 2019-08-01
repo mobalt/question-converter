@@ -1,9 +1,20 @@
 export class Question {
-    constructor({ text, name = 'Question', points = 1, answers }) {
+    constructor({
+        text,
+        name = 'Question',
+        points = 1,
+        answers,
+        correct_comments,
+        incorrect_comments,
+        neutral_comments,
+    }) {
         this.text = text ? text.trim() : ''
         this.name = name
         this.points = points
         this.answers = answers
+        this.correct_comments = correct_comments
+        this.incorrect_comments = incorrect_comments
+        this.neutral_comments = neutral_comments
         this.forceCorrect = false
     }
 
