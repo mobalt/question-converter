@@ -7,7 +7,9 @@ export class Question {
         correct_comments,
         incorrect_comments,
         neutral_comments,
+        id,
     }) {
+        this.id = id
         this.text = text ? text.trim() : ''
         this.name = name
         this.points = points
