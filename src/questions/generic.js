@@ -167,6 +167,18 @@ const canvasAnswer = convert({
 const canvasAnswer2 = transform({
     id: 'id',
     group: 'blank_id',
+    isCorrect: {
+        forward(obj) {
+            return {
+                isCorrect: !!obj.weight,
+            }
+        },
+        backward(obj) {
+            return {
+                weight: obj.isCorrect ? 100 : 0,
+            }
+        },
+    },
 })
 
 const canvasQuestion = convert({
