@@ -6,7 +6,7 @@ export class TrueFalse extends Question {
     }
 
     static get canvas_type() {
-        return 'essay_question'
+        return 'true_false_question'
     }
 
     static get type() {
