@@ -85,6 +85,26 @@ describe.only('Multiple Choice', () => {
                 c.should.be.an.instanceOf(Object)
             })
 
+            it('have correct answer equal to 100', () => {
+                a.weight.should.equal(100)
+            })
+
+            it('have wrong answers equal to 0', () => {
+                b.weight.should.equal(0)
+                c.weight.should.equal(0)
+            })
+
+            it('include correct text fields', () => {
+                a.text.should.equal('Correct One')
+                b.text.should.equal('Wrong 1')
+                c.html.should.equal('<b>Wrong 2</b>')
+            })
+
+            it('exclude wrong text fields', () => {
+                a.should.not.include.keys('html')
+                b.should.not.include.keys('html')
+                c.should.not.include.keys('text')
+            })
         })
     })
 })
