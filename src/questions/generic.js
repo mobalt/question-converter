@@ -15,7 +15,6 @@ export class Question {
         this.correct_comments = correct_comments
         this.incorrect_comments = incorrect_comments
         this.neutral_comments = neutral_comments
-        this.forceCorrect = false
     }
 
     get answerObj() {
@@ -33,6 +32,9 @@ export class Question {
     toCanvas() {
         return canvasQuestion(this, true)
     }
+    static get forceCorrect() {
+        return false
+    }
 
     static get canvas_type() {
         throw new Error("Don't use the internal Question class")
@@ -43,7 +45,6 @@ export class Question {
         throw new Error("Don't use the internal Question class")
         return 'Generic Question'
     }
-
 }
 
 export class Answer {
@@ -55,5 +56,3 @@ export class Answer {
         this.id = id
     }
 }
-
-

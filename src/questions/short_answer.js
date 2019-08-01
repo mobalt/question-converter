@@ -3,7 +3,10 @@ import { Question, Answer } from './generic'
 export class ShortAnswer extends Question {
     constructor(a) {
         super(a)
-        this.forceCorrect = true
+    }
+
+    static get forceCorrect() {
+        return true
     }
 
     static get canvas_type() {
