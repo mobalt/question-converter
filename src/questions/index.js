@@ -1,5 +1,5 @@
 import editDistance from 'js-levenshtein'
-import { Answer } from './generic'
+import { Question, Answer } from './generic'
 import { Essay } from './essay'
 import { FileUpload } from './fileupload'
 import { FillInMultipleBlanks } from './multiple_blanks'
@@ -118,25 +118,31 @@ function oneToOne(right) {
     }
 }
 
-function textHtml(textName, htmlName) {
+function textHtml(textName, htmlName, required = false) {
     if (!htmlName) htmlName = textName + '_html'
 
     return {
         forward(obj, leftPropName) {
-            return {
-                [leftPropName]:
-                    obj[textName] == '' ? obj[htmlName] : obj[textName],
-            }
+            const result = {}
+            const { [htmlName]: html, [textName]: text } = obj
+            if (html) result[leftPropName] = html.trim()
+            else if (text) result[leftPropName] = text.trim()
+            else if (required) result[leftPropName] = ''
+            // else just return empty object
+
+            return result
         },
         backward(obj, leftPropName) {
+            const result = {}
             const value = obj[leftPropName]
-            if (isDefined(value)) {
-                return {
-                    [containsHTML(value) ? htmlName : textName]: value.trim(),
-                }
-            } else {
-                return { [textName]: '' }
-            }
+            const valueText = String(value).trim()
+
+            if (isDefined(value) && valueText != '') {
+                if (containsHTML(valueText)) result[htmlName] = valueText
+                else result[textName] = valueText
+            } else if (required) result[textName] = ''
+
+            return result
         },
     }
 
@@ -149,7 +155,7 @@ const canvasAnswer = transform({
     id: 'id',
     group: 'blank_id',
     comments: textHtml('comments'),
-    text: textHtml('text', 'html'),
+    text: textHtml('text', 'html', true),
     isCorrect: {
         forward(obj) {
             return {
@@ -205,6 +211,10 @@ function safeAnswerItem(item, group, forceCorrect = false) {
     return new Answer(result)
 }
 
+const internal = {
+    Answer,
+    Question,
+}
 export default {
     fromSimple: QfromSimple,
     fromCanvas: QfromCanvas,
@@ -220,4 +230,5 @@ export default {
         }
     },
     types,
+    internal,
 }
