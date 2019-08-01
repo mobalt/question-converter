@@ -120,6 +120,28 @@ function convert(template) {
         return newObj
     }
 }
+
+function transform(template) {
+    const transformations = Object.entries(template).map(([left, right]) => {
+        if (typeof right == 'string') {
+            return [left, oneToOne(right)]
+        } else {
+            return [left, right]
+        }
+    })
+
+    return function(obj) {
+        // execute
+    }
+}
+
+function oneToOne(right) {
+    return {
+        forward(obj){return {}},
+        backward(obj){return {}},
+    }
+}
+
 const canvasAnswer = convert({
     text: ['text', 'html'],
     comments: ['comments', 'comments_html'],
@@ -127,6 +149,11 @@ const canvasAnswer = convert({
     id: ['id'],
     isCorrect: obj => !!obj.weight,
 })
+const canvasAnswer2 = transform({
+    id: 'id',
+    group: 'blank_id',
+})
+
 const canvasQuestion = convert({
     id: ['id'],
     name: ['question_name'],
@@ -136,6 +163,13 @@ const canvasQuestion = convert({
     incorrect_comments: ['incorrect_comments', 'incorrect_comments_html'],
     neutral_comments: ['neutral_comments', 'neutral_comments_html'],
     answers: obj => obj.answers.map(canvasAnswer),
+})
+const canvasQuestion2 = transform({
+    id: 'id',
+    name: 'question_name',
+    points: 'points_possible',
+    text: 'question_text',
+    type: 'question_type',
 })
 
 function parseAnswerText(answer) {
