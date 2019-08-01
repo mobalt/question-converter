@@ -2,11 +2,11 @@ import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { FillInMultipleBlanks as QuestionType } from '../../src/questions/multiple_blanks'
-import { QfromCanvas, QfromSimple } from '../../src/questions'
+import qs from '../../src/questions'
 
 describe('Fill In Multiple Blanks', () => {
     const canvas_question_obj = canvas_questions[3]
-    const question = QfromCanvas(canvas_question_obj)
+    const question = qs.fromCanvas(canvas_question_obj)
 
     it('is an instance of MultipleBlanks', () => {
         question.should.be.an.instanceOf(QuestionType)

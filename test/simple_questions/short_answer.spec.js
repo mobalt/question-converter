@@ -1,7 +1,7 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import { ShortAnswer } from '../../src/questions/short_answer'
-import { QfromCanvas, QfromSimple } from '../../src/questions'
+import qs from '../../src/questions'
 
 describe('Short Answer', () => {
     const simple_shortanswer = {
@@ -9,7 +9,7 @@ describe('Short Answer', () => {
         type: 'ShortAnswer',
         answers: [1, 'One', '~ 2', '~    Two'],
     }
-    const question = QfromSimple(simple_shortanswer)
+    const question = qs.fromSimple(simple_shortanswer)
 
     it('is correct instance', () => {
         question.should.be.an.instanceOf(ShortAnswer)

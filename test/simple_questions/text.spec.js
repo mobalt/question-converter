@@ -1,7 +1,7 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import { Text } from '../../src/questions/text'
-import { QfromCanvas, QfromSimple } from '../../src/questions'
+import qs from '../../src/questions'
 
 describe('Text', () => {
     const simple_text = {
@@ -9,7 +9,7 @@ describe('Text', () => {
         type: 'Text',
     }
 
-    const question = QfromSimple(simple_text)
+    const question = qs.fromSimple(simple_text)
 
     it('is an instance of Text', function() {
         question.should.be.an.instanceOf(Text)

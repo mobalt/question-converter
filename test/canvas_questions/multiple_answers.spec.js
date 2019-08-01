@@ -3,11 +3,11 @@ import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { MultipleAnswers as QuestionType } from '../../src/questions/multiple_answers'
 import { Answer } from '../../src/questions/generic'
-import { QfromCanvas, QfromSimple } from '../../src/questions'
+import qs from '../../src/questions'
 
 describe('Multiple Answers', () => {
     const canvas_question_obj = canvas_questions[4]
-    const question = QfromCanvas(canvas_question_obj)
+    const question = qs.fromCanvas(canvas_question_obj)
 
     it('is an instance of MultipleAnswers', () => {
         question.should.be.an.instanceOf(QuestionType)

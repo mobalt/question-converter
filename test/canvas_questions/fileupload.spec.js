@@ -2,11 +2,11 @@ import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { FileUpload as QuestionType } from '../../src/questions/fileupload'
-import { QfromCanvas, QfromSimple } from '../../src/questions'
+import qs from '../../src/questions'
 
 describe('FileUpload', () => {
     const canvas_question_obj = canvas_questions[8]
-    const question = QfromCanvas(canvas_question_obj)
+    const question = qs.fromCanvas(canvas_question_obj)
 
     it('is an instance of FileUpload', function() {
         question.should.be.an.instanceOf(QuestionType)

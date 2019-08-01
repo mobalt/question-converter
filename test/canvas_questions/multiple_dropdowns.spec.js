@@ -2,11 +2,11 @@ import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { MultipleDropdowns as QuestionType } from '../../src/questions/multiple_dropdowns'
-import { QfromCanvas, QfromSimple } from '../../src/questions'
+import qs from '../../src/questions'
 
 describe('Multiple Dropdowns', () => {
     const canvas_question_obj = canvas_questions[5]
-    const question = QfromCanvas(canvas_question_obj)
+    const question = qs.fromCanvas(canvas_question_obj)
 
     it('is an instance of MultipleDropdowns', () => {
         question.should.be.an.instanceOf(QuestionType)
