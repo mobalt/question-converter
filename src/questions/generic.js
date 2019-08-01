@@ -132,6 +132,11 @@ function transform(template) {
 
     return function(obj) {
         // execute
+        const parts = transformations.map(([leftName, fnObj]) => {
+            return fnObj[direction](obj, leftName)
+        })
+        // merge all the parts into a single Object
+        return Object.assign(...parts)
     }
 }
 
