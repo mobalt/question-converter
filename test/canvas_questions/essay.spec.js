@@ -2,10 +2,11 @@ import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
 import { Essay as QuestionType } from '../../src/questions/essay'
+import { QfromCanvas, QfromSimple } from '../../src/questions'
 
 describe('Essay', () => {
     const canvas_question_obj = canvas_questions[7]
-    const question = QuestionType.fromCanvas(canvas_question_obj)
+    const question = QfromCanvas(canvas_question_obj)
 
     it('is correct instance', function() {
         question.should.be.an.instanceOf(QuestionType)

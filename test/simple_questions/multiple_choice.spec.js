@@ -1,6 +1,7 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import { MultipleChoice } from '../../src/questions/multiple_choice'
+import { QfromCanvas, QfromSimple } from '../../src/questions'
 
 describe('Multiple Choice', () => {
     const simple_mc = {
@@ -10,7 +11,7 @@ describe('Multiple Choice', () => {
         answers: ['~ Correct One', 'Wrong 1', 'Wrong 2'],
     }
 
-    const question = MultipleChoice.fromSimple(simple_mc)
+    const question = QfromSimple(simple_mc)
 
     it('is an instance of MultipleChoice', () => {
         question.should.be.an.instanceOf(MultipleChoice)

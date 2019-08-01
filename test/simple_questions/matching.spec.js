@@ -1,5 +1,6 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
+import { QfromCanvas, QfromSimple } from '../../src/questions'
 
 describe.skip('Matching', () => {
     const simple_matching = {
