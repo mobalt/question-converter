@@ -48,29 +48,23 @@ function findClosestSimple(type) {
     return v[minI]
 }
 
-function fromSimple(obj) {
-    const type = findClosestSimple(obj.type)
-    const question = new type(obj)
-    return question
-}
-
-export { types, fromSimple, fromCanvas, QfromCanvas, QfromSimple }
+export { types, QfromCanvas, QfromSimple }
 
 function QfromSimple(obj) {
-    const answers = answerList(obj.answers)
-    return fromSimple({ ...obj, answers })
+    const type = findClosestSimple(obj.type)
+    const answers = answerList(obj.answers, undefined, type.forceCorrect)
+    obj = { ...obj, answers }
+    const question = new type(obj)
+    return question
     //return new this({ ...obj, answers })
 }
 
-function fromCanvas(obj) {
+function QfromCanvas(obj) {
+    obj = canvasQuestion(obj)
     if (!isDefined(obj.type)) throw new Error('Canvas object is missing type.')
     const type = findClosestCanvas(obj.type)
     const question = new type(obj)
     return question
-}
-function QfromCanvas(obj) {
-    const simpleObj = canvasQuestion(obj)
-    return fromCanvas(simpleObj)
     // return new this(simpleObj)
 }
 
