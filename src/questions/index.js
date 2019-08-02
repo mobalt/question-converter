@@ -1,5 +1,5 @@
 import editDistance from 'js-levenshtein'
-import { Question, Answer } from './generic'
+import { Answer, Question } from './generic'
 import { Essay } from './essay'
 import { FileUpload } from './fileupload'
 import { FillInMultipleBlanks } from './multiple_blanks'
@@ -9,7 +9,6 @@ import { MultipleDropdowns } from './multiple_dropdowns'
 import { ShortAnswer } from './short_answer'
 import { Text } from './text'
 import { TrueFalse } from './truefalse'
-import { conversions } from './conversions'
 
 const types = {
     Essay,
@@ -22,34 +21,71 @@ const types = {
     Text,
     TrueFalse,
 }
+const exact_lookup = {}
 
-function fuzzyFind(needle, haystack) {
+for (let name in types) {
+    exact_lookup[name] = name
+}
+const convert_canvas = {
+    Essay: 'essay_question',
+    FileUpload: 'file_upload_question',
+    MultipleAnswers: 'multiple_answers_question',
+    FillInMultipleBlanks: 'fill_in_multiple_blanks_question',
+    MultipleChoice: 'multiple_choice_question',
+    MultipleDropdowns: 'multiple_dropdowns_question',
+    ShortAnswer: 'short_answer_question',
+    Text: 'text_only_question',
+    TrueFalse: 'true_false_question',
+}
+const convert_simple = {
+    Essay: 'Essay',
+    FileUpload: 'FileUpload',
+    MultipleAnswers: 'Multiple Answers',
+    FillInMultipleBlanks: 'Multiple Blanks',
+    MultipleChoice: 'Multiple Choice',
+    MultipleDropdowns: 'Multiple Dropdowns',
+    ShortAnswer: 'Short Answer',
+    Text: 'Text',
+    TrueFalse: 'True False',
+}
+
+function findType(fuzzyName, lookupDict = exact_lookup) {
     let minDistance = Number.MAX_SAFE_INTEGER,
-        minI = -1
+        closestType
 
-    for (let i in haystack) {
-        const distance = editDistance(needle, haystack[i])
+    for (let typename in lookupDict) {
+        const distance = editDistance(fuzzyName, lookupDict[typename])
         if (distance < minDistance) {
             minDistance = distance
-            minI = i
+            closestType = typename
         }
     }
 
-    return minI
+    return types[closestType]
 }
 
 function findClosestCanvasType(type) {
-    const v = Object.values(types)
-    const minI = fuzzyFind(type, v.map(t => t.canvas_type))
-    return v[minI]
-}
-function findClosestSimpleType(type) {
-    const v = Object.values(types)
-    const minI = fuzzyFind(type || 'Multiple Choice', v.map(t => t.type))
-    return v[minI]
+    return findType(type, convert_canvas)
 }
 
-function QfromSimple(simpleObj) {
+function findClosestSimpleType(type) {
+    if (!type) type = 'Multiple Choice'
+    return findType(type, convert_simple)
+}
+function toSimple(question) {
+    return {
+        ...question,
+        answers: question.answerObj,
+    }
+}
+
+function toCanvas(question) {
+    const canvasObj = canvasQuestion(question, true)
+    canvasObj.question_type = convert_canvas[question.constructor.name]
+    return canvasObj
+}
+
+function fromSimple(simpleObj) {
     const QuestionType = findClosestSimpleType(simpleObj.type)
     const unifiedObj = {
         ...simpleObj,
@@ -58,7 +94,7 @@ function QfromSimple(simpleObj) {
     return new QuestionType(unifiedObj)
 }
 
-function QfromCanvas(questionObj) {
+function fromCanvas(questionObj) {
     const unifiedObj = canvasQuestion(questionObj)
     if (!isDefined(unifiedObj.type))
         throw new Error('Canvas object is missing type.')
@@ -66,22 +102,6 @@ function QfromCanvas(questionObj) {
     return new QuestionType(unifiedObj)
 }
 
-function answerList(list, forceCorrect, group) {
-    // answersObj[] --> Answer[]
-    if (Array.isArray(list)) {
-        return list.map(ans => safeAnswerItem(ans, group, forceCorrect))
-
-        // {groupName: answersObj[]} --> Answer[]
-    } else if (typeof list == 'object') {
-        return [].concat(
-            ...Object.entries(list).map(([group, list]) => {
-                return answerList(list, forceCorrect, group)
-            }),
-        )
-    } else {
-        return []
-    }
-}
 function transform(template) {
     const transformations = Object.entries(template).map(([left, right]) => {
         if (typeof right == 'string') {
@@ -211,24 +231,32 @@ function safeAnswerItem(item, group, forceCorrect = false) {
     return new Answer(result)
 }
 
-const internal = {
-    Answer,
-    Question,
+function answerList(list, forceCorrect, group) {
+    // answersObj[] --> Answer[]
+    if (Array.isArray(list)) {
+        return list.map(ans => safeAnswerItem(ans, group, forceCorrect))
+
+        // {groupName: answersObj[]} --> Answer[]
+    } else if (typeof list == 'object') {
+        return [].concat(
+            ...Object.entries(list).map(([group, list]) => {
+                return answerList(list, forceCorrect, group)
+            }),
+        )
+    } else {
+        return []
+    }
 }
+
 export default {
-    fromSimple: QfromSimple,
-    fromCanvas: QfromCanvas,
-    toCanvas(question) {
-        const canvasObj = canvasQuestion(question, true)
-        canvasObj.question_type = conversions[question.constructor.name].canvas
-        return canvasObj
+    fromSimple,
+    fromCanvas,
+    toCanvas,
+    toSimple,
+    types: {
+        ...types,
+        Answer,
+        Question,
     },
-    toSimple(question) {
-        return {
-            ...question,
-            answers: question.answerObj,
-        }
-    },
-    types,
-    internal,
+    findType,
 }
