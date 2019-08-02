@@ -1,8 +1,9 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import { FillInMultipleBlanks as QuestionType } from '../../src/questions/multiple_blanks'
-import qs from '../../src/questions'
+import { FillInMultipleBlanks } from '../../src/questions/multiple_blanks'
+import { fromCanvas, toCanvas } from '../../src/canvas'
+import { Answer } from '../../src/questions/generic'
 
 describe('Fill In Multiple Blanks', () => {
     const canvas_obj = {
@@ -20,10 +21,10 @@ describe('Fill In Multiple Blanks', () => {
     }
 
     describe('#fromCanvas', () => {
-        const question = qs.fromCanvas(canvas_obj)
+        const question = fromCanvas(canvas_obj)
 
         it('is an instance of MultipleBlanks', () => {
-            question.should.be.an.instanceOf(qs.types.FillInMultipleBlanks)
+            question.should.be.an.instanceOf(FillInMultipleBlanks)
         })
 
         it('has correct prompt', () => {
@@ -38,7 +39,6 @@ describe('Fill In Multiple Blanks', () => {
 
         it('all answers are instances of Answer', () => {
             const [a, b, c, d, e] = question.answers
-            const Answer = qs.internal.Answer
 
             a.should.be.instanceOf(Answer)
             b.should.be.instanceOf(Answer)
@@ -73,29 +73,25 @@ describe('Fill In Multiple Blanks', () => {
 
         it('can handle the extra fields of a full canvas object', () => {
             const canvas_obj_full_version = canvas_questions[3]
-            const fullQuestion = qs.fromCanvas(canvas_obj_full_version)
+            const fullQuestion = fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
         })
     })
 
     describe('#toCanvas', () => {
-        const { Answer } = qs.internal,
-            { FillInMultipleBlanks } = qs.types
-
-        const answers = [
-            new Answer({ text: 'red', isCorrect: true, group: 'color1' }),
-            new Answer({ text: 'pink', isCorrect: true, group: 'color1' }),
-            new Answer({ text: 'white', isCorrect: true, group: 'color1' }),
-            new Answer({ text: 'blue', isCorrect: true, group: 'color2' }),
-            new Answer({ text: 'violet', isCorrect: true, group: 'color2' }),
-        ]
         const question = new FillInMultipleBlanks({
             text: '<p>Roses are [color1], violets are [color2]</p>',
             name: 'Question',
             points: 1,
-            answers,
+            answers: [
+                { text: 'red', isCorrect: true, group: 'color1' },
+                { text: 'pink', isCorrect: true, group: 'color1' },
+                { text: 'white', isCorrect: true, group: 'color1' },
+                { text: 'blue', isCorrect: true, group: 'color2' },
+                { text: 'violet', isCorrect: true, group: 'color2' },
+            ],
         })
-        const canvasObj = qs.toCanvas(question)
+        const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {
             it('is a normal javascript object', () => {
@@ -184,14 +180,14 @@ describe('Fill In Multiple Blanks', () => {
         it('can convert from/to canvas objects, without loss of data', async () => {
             // do it 4x!!!
             const new_canvas_obj = await Promise.resolve(canvas_obj)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
 
             new_canvas_obj.should.deep.equal(canvas_obj)
         })

@@ -1,7 +1,8 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import qs from '../../src/questions'
+import { fromCanvas, toCanvas } from '../../src/canvas'
+import { Text } from '../../src/questions/text'
 
 describe('Text', () => {
     const canvas_obj = {
@@ -14,10 +15,10 @@ describe('Text', () => {
     }
 
     describe('#fromCanvas', () => {
-        const question = qs.fromCanvas(canvas_obj)
+        const question = fromCanvas(canvas_obj)
 
         it('is an instance of Text', function() {
-            question.should.be.an.instanceOf(qs.types.Text)
+            question.should.be.an.instanceOf(Text)
         })
 
         it('has correct question label', function() {
@@ -34,22 +35,19 @@ describe('Text', () => {
 
         it('can handle the extra fields of a full canvas object', () => {
             const canvas_obj_full_version = canvas_questions[9]
-            const fullQuestion = qs.fromCanvas(canvas_obj_full_version)
+            const fullQuestion = fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
         })
     })
 
     describe('#toCanvas', () => {
-        const { Answer } = qs.internal,
-            { Text } = qs.types
-
         const question = new Text({
             text: 'Just text.',
             name: 'Question',
             points: 0,
             answers: [],
         })
-        const canvasObj = qs.toCanvas(question)
+        const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {
             it('is a normal javascript object', () => {
@@ -91,14 +89,14 @@ describe('Text', () => {
         it('can convert from/to canvas objects, without loss of data', async () => {
             // do it 4x!!!
             const new_canvas_obj = await Promise.resolve(canvas_obj)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
 
             new_canvas_obj.should.deep.equal(canvas_obj)
         })

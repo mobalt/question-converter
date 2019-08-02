@@ -1,7 +1,8 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import qs from '../../src/questions'
+import { fromCanvas, toCanvas } from '../../src/canvas'
+import { MultipleChoice } from '../../src/questions/multiple_choice'
 
 describe('Multiple Choice', () => {
     const canvas_obj = {
@@ -25,10 +26,10 @@ describe('Multiple Choice', () => {
     }
 
     describe('#fromCanvas', () => {
-        const question = qs.fromCanvas(canvas_obj)
+        const question = fromCanvas(canvas_obj)
 
         it('is an instance of MultipleChoice', () => {
-            question.should.be.an.instanceOf(qs.types.MultipleChoice)
+            question.should.be.an.instanceOf(MultipleChoice)
         })
 
         it('has correct prompt', () => {
@@ -62,15 +63,12 @@ describe('Multiple Choice', () => {
 
         it('can handle the extra fields of a full canvas object', () => {
             const canvas_obj_full_version = canvas_questions[0]
-            const fullQuestion = qs.fromCanvas(canvas_obj_full_version)
+            const fullQuestion = fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
         })
     })
 
     describe('#toCanvas', () => {
-        const Answer = qs.internal.Answer,
-            MultipleChoice = qs.types.MultipleChoice
-
         const question = new MultipleChoice({
             id: 999,
             text: '<p> Multiple Choice Text </p>',
@@ -78,15 +76,15 @@ describe('Multiple Choice', () => {
             name: 'MC Question 1',
             type: 'Multiple Choice',
             answers: [
-                new Answer({ text: 'Wrong 1', isCorrect: false }),
-                new Answer({ text: 'Correct One', isCorrect: true }),
-                new Answer({ text: 'Wrong 2', isCorrect: false }),
-                new Answer({ text: '<b>Wrong 3</b>', isCorrect: false }),
+                { text: 'Wrong 1', isCorrect: false },
+                { text: 'Correct One', isCorrect: true },
+                { text: 'Wrong 2', isCorrect: false },
+                { text: '<b>Wrong 3</b>', isCorrect: false },
             ],
             correct_comments: '<b>Yay!</b>',
             incorrect_comments: 'Nay!',
         })
-        const canvasObj = qs.toCanvas(question)
+        const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {
             it('is a normal javascript object', () => {
@@ -169,14 +167,14 @@ describe('Multiple Choice', () => {
         it('can convert from/to canvas objects, without loss of data', async () => {
             // do it 4x!!!
             const new_canvas_obj = await Promise.resolve(canvas_obj)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
 
             new_canvas_obj.should.deep.equal(canvas_obj)
         })

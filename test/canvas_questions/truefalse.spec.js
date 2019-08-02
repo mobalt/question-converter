@@ -1,7 +1,8 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import qs from '../../src/questions'
+import { fromCanvas, toCanvas } from '../../src/canvas'
+import { TrueFalse } from '../../src/questions/truefalse'
 
 describe('True/False', () => {
     const canvas_obj = {
@@ -21,10 +22,10 @@ describe('True/False', () => {
     }
 
     describe('#fromCanvas', () => {
-        const question = qs.fromCanvas(canvas_obj)
+        const question = fromCanvas(canvas_obj)
 
         it('is an instance of correct class', function() {
-            question.should.be.an.instanceOf(qs.types.TrueFalse)
+            question.should.be.an.instanceOf(TrueFalse)
         })
 
         it('has correct question label', function() {
@@ -48,25 +49,22 @@ describe('True/False', () => {
 
         it('can handle the extra fields of a full canvas object', () => {
             const canvas_obj_full_version = canvas_questions[1]
-            const fullQuestion = qs.fromCanvas(canvas_obj_full_version)
+            const fullQuestion = fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
         })
     })
 
     describe('#toCanvas', () => {
-        const { Answer } = qs.internal,
-            { TrueFalse } = qs.types
-
         const question = new TrueFalse({
             text: 'Is this true?',
             name: 'A True-or-False Question',
             points: 1,
             answers: [
-                new Answer({ text: 'True', isCorrect: true }),
-                new Answer({ text: 'False', isCorrect: false }),
+                { text: 'True', isCorrect: true },
+                { text: 'False', isCorrect: false },
             ],
         })
-        const canvasObj = qs.toCanvas(question)
+        const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {
             it('is a normal javascript object', () => {
@@ -135,14 +133,14 @@ describe('True/False', () => {
         it('can convert from/to canvas objects, without loss of data', async () => {
             // do it 4x!!!
             const new_canvas_obj = await Promise.resolve(canvas_obj)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
 
             new_canvas_obj.should.deep.equal(canvas_obj)
         })

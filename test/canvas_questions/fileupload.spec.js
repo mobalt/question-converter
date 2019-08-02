@@ -1,8 +1,8 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import { FileUpload as QuestionType } from '../../src/questions/fileupload'
-import qs from '../../src/questions'
+import { fromCanvas, toCanvas } from '../../src/canvas'
+import { FileUpload } from '../../src/questions/fileupload'
 
 describe('FileUpload', () => {
     const canvas_obj = {
@@ -15,10 +15,10 @@ describe('FileUpload', () => {
     }
 
     describe('#fromCanvas', () => {
-        const question = qs.fromCanvas(canvas_obj)
+        const question = fromCanvas(canvas_obj)
 
         it('is an instance of FileUpload', () => {
-            question.should.be.an.instanceOf(qs.types.FileUpload)
+            question.should.be.an.instanceOf(FileUpload)
         })
 
         it('has correct question label', function() {
@@ -37,7 +37,7 @@ describe('FileUpload', () => {
 
         it('can handle the extra fields of a full canvas object', () => {
             const canvas_obj_full_version = canvas_questions[8]
-            const fullQuestion = qs.fromCanvas(canvas_obj_full_version)
+            const fullQuestion = fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
         })
     })
@@ -61,7 +61,7 @@ describe('FileUpload', () => {
             correct_comments: '<b>Yay!</b>',
             incorrect_comments: 'Nay!',
         })
-        const canvasObj = qs.toCanvas(question)
+        const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {
             it('is a normal javascript object', () => {
@@ -103,55 +103,20 @@ describe('FileUpload', () => {
                 })
             })
         })
-
-        describe('The canvas answer objects', () => {
-            const [a, b, c, d] = canvasObj.answers
-
-            it('are basic javascript types', () => {
-                a.should.be.an.instanceOf(Object)
-                b.should.be.an.instanceOf(Object)
-                c.should.be.an.instanceOf(Object)
-                d.should.be.an.instanceOf(Object)
-            })
-
-            it('have correct answer equal to 100', () => {
-                b.weight.should.equal(100)
-            })
-
-            it('have wrong answers equal to 0', () => {
-                a.weight.should.equal(0)
-                c.weight.should.equal(0)
-                d.weight.should.equal(0)
-            })
-
-            it('include correct text fields', () => {
-                a.text.should.equal('Wrong 1')
-                b.text.should.equal('Correct One')
-                c.text.should.equal('Wrong 2')
-                d.html.should.equal('<b>Wrong 3</b>')
-            })
-
-            it('exclude wrong text fields', () => {
-                a.should.not.include.keys('html')
-                b.should.not.include.keys('html')
-                c.should.not.include.keys('html')
-                d.should.not.include.keys('text')
-            })
-        })
     })
 
     describe('Idempotency', () => {
         it('can convert from/to canvas objects, without loss of data', async () => {
             // do it 4x!!!
             const new_canvas_obj = await Promise.resolve(canvas_obj)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
 
             new_canvas_obj.should.deep.equal(canvas_obj)
         })

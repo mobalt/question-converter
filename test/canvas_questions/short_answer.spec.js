@@ -1,7 +1,8 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import qs from '../../src/questions'
+import { fromCanvas, toCanvas } from '../../src/canvas'
+import { ShortAnswer } from '../../src/questions/short_answer'
 
 describe('Short Answer', () => {
     const canvas_obj = {
@@ -27,10 +28,10 @@ describe('Short Answer', () => {
     }
 
     describe('#fromCanvas', () => {
-        const question = qs.fromCanvas(canvas_obj)
+        const question = fromCanvas(canvas_obj)
 
         it('is correct instance', () => {
-            question.should.be.an.instanceOf(qs.types.ShortAnswer)
+            question.should.be.an.instanceOf(ShortAnswer)
         })
         it('has correct prompt', () => {
             question.text.should.equal('<p>Roses are _____. </p>')
@@ -48,28 +49,24 @@ describe('Short Answer', () => {
         })
         it('can handle the extra fields of a full canvas object', () => {
             const canvas_obj_full_version = canvas_questions[2]
-            const fullQuestion = qs.fromCanvas(canvas_obj_full_version)
+            const fullQuestion = fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
         })
     })
 
     describe('#toCanvas', () => {
-        const { Answer } = qs.internal,
-            { ShortAnswer } = qs.types
-
-        const answers = [
-            new Answer({ text: '1', isCorrect: true }),
-            new Answer({ text: 'One', isCorrect: true }),
-            new Answer({ text: '2', isCorrect: true }),
-            new Answer({ text: 'Two', isCorrect: true }),
-        ]
         const question = new ShortAnswer({
             text: 'What is one of the first two numbers?',
             name: 'Question',
             points: 1,
-            answers,
+            answers: [
+                { text: '1', isCorrect: true },
+                { text: 'One', isCorrect: true },
+                { text: '2', isCorrect: true },
+                { text: 'Two', isCorrect: true },
+            ],
         })
-        const canvasObj = qs.toCanvas(question)
+        const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {
             it('is a normal javascript object', () => {
@@ -143,14 +140,14 @@ describe('Short Answer', () => {
         it('can convert from/to canvas objects, without loss of data', async () => {
             // do it 4x!!!
             const new_canvas_obj = await Promise.resolve(canvas_obj)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
-                .then(qs.fromCanvas)
-                .then(qs.toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
+                .then(fromCanvas)
+                .then(toCanvas)
 
             new_canvas_obj.should.deep.equal(canvas_obj)
         })
