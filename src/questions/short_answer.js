@@ -1,4 +1,4 @@
-import { Question, Answer } from './generic'
+import { Question } from './generic'
 
 export class ShortAnswer extends Question {
     constructor(a) {

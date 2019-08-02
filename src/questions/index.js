@@ -1,16 +1,13 @@
 import editDistance from 'js-levenshtein'
-import {Answer, Question} from './generic'
-import {Essay} from './essay'
-import {FileUpload} from './fileupload'
-import {FillInMultipleBlanks} from './multiple_blanks'
-import {MultipleAnswers} from './multiple_answers'
-import {MultipleChoice} from './multiple_choice'
-import {MultipleDropdowns} from './multiple_dropdowns'
-import {ShortAnswer} from './short_answer'
-import {Text} from './text'
-import {TrueFalse} from './truefalse'
-import {fromSimple, toSimple} from '../simple'
-import {fromCanvas, toCanvas} from "../canvas"
+import { Essay } from './essay'
+import { FileUpload } from './fileupload'
+import { FillInMultipleBlanks } from './multiple_blanks'
+import { MultipleAnswers } from './multiple_answers'
+import { MultipleChoice } from './multiple_choice'
+import { MultipleDropdowns } from './multiple_dropdowns'
+import { ShortAnswer } from './short_answer'
+import { Text } from './text'
+import { TrueFalse } from './truefalse'
 
 const types = {
     Essay,
@@ -44,14 +41,4 @@ export function findType(fuzzyName, lookupDict = exact_lookup) {
     return types[closestType]
 }
 
-export default {
-    fromSimple,
-    fromCanvas,
-    toCanvas,
-    toSimple,
-    types: {
-        ...types,
-        Answer,
-        Question,
-    },
-}
+export default types

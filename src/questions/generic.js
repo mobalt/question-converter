@@ -13,7 +13,9 @@ export class Question {
         this.text = text ? text.trim() : ''
         this.name = name
         this.points = points
-        this.answers = answers
+        if (Array.isArray(answers)) {
+            this.answers = answers.map(ansObj => new Answer(ansObj))
+        } else this.answers = []
         this.correct_comments = correct_comments
         this.incorrect_comments = incorrect_comments
         this.neutral_comments = neutral_comments
@@ -43,6 +45,10 @@ export class Question {
     static get type() {
         throw new Error("Don't use the internal Question class")
         return 'Generic Question'
+    }
+
+    addAnswer(obj) {
+        this.answers.push(new Answer(obj))
     }
 }
 
