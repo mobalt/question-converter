@@ -20,7 +20,6 @@ describe('True/False', () => {
         question_type: 'true_false_question',
     }
 
-
     describe('#fromCanvas', () => {
         const question = qs.fromCanvas(canvas_obj)
 
@@ -51,6 +50,84 @@ describe('True/False', () => {
             const canvas_obj_full_version = canvas_questions[1]
             const fullQuestion = qs.fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
+        })
+    })
+
+    describe('#toCanvas', () => {
+        const { Answer } = qs.internal,
+            { TrueFalse } = qs.types
+
+        const question = new TrueFalse({
+            text: 'Is this true?',
+            name: 'A True-or-False Question',
+            points: 1,
+            answers: [
+                new Answer({ text: 'True', isCorrect: true }),
+                new Answer({ text: 'False', isCorrect: false }),
+            ],
+        })
+        const canvasObj = qs.toCanvas(question)
+
+        describe('The canvas question object', () => {
+            it('is a normal javascript object', () => {
+                canvasObj.should.be.an.instanceOf(Object)
+            })
+
+            it('has 2 answers', () => {
+                canvasObj.answers.should.be.an('array').with.lengthOf(2)
+            })
+
+            it('has canvas specific question_type', () => {
+                canvasObj.question_type.should.equal('true_false_question')
+            })
+
+            it('has #oneToOne fields', () => {
+                canvasObj.should.include({
+                    question_text: 'Is this true?',
+                    points_possible: 1,
+                    question_name: 'A True-or-False Question',
+                })
+            })
+
+            describe('has #textHtml fields', () => {
+                it('has all fields excluded', () => {
+                    canvasObj.should.not.have.any.keys(
+                        'correct_comments',
+                        'correct_comments_html',
+                        'incorrect_comments',
+                        'incorrect_comments_html',
+                        'neutral_comments',
+                        'neutral_comments_html',
+                    )
+                })
+            })
+        })
+
+        describe('The canvas answer objects', () => {
+            const [a, b] = canvasObj.answers
+
+            it('are basic javascript types', () => {
+                a.should.be.an.instanceOf(Object)
+                b.should.be.an.instanceOf(Object)
+            })
+
+            it('have correct answer equal to 100', () => {
+                a.weight.should.equal(100)
+            })
+
+            it('have wrong answers equal to 0', () => {
+                b.weight.should.equal(0)
+            })
+
+            it('include correct text fields', () => {
+                a.text.should.equal('True')
+                b.text.should.equal('False')
+            })
+
+            it('exclude wrong text fields', () => {
+                a.should.not.include.keys('html')
+                b.should.not.include.keys('html')
+            })
         })
     })
 })
