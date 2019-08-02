@@ -8,12 +8,4 @@ export class TrueFalse extends Question {
             this.addAnswer({ text: 'False', isCorrect: !a.answer })
         }
     }
-
-    static get canvas_type() {
-        return 'true_false_question'
-    }
-
-    static get type() {
-        return 'True False'
-    }
 }

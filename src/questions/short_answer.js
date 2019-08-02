@@ -8,12 +8,4 @@ export class ShortAnswer extends Question {
     static get forceCorrect() {
         return true
     }
-
-    static get canvas_type() {
-        return 'short_answer_question'
-    }
-
-    static get type() {
-        return 'Short Answer'
-    }
 }

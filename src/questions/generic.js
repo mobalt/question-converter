@@ -36,17 +36,6 @@ export class Question {
     static get forceCorrect() {
         return false
     }
-
-    static get canvas_type() {
-        throw new Error("Don't use the internal Question class")
-        return 'generic_question'
-    }
-
-    static get type() {
-        throw new Error("Don't use the internal Question class")
-        return 'Generic Question'
-    }
-
     addAnswer(obj) {
         this.answers.push(new Answer(obj))
     }
