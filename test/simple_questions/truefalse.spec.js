@@ -1,7 +1,7 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import { TrueFalse } from '../../src/questions/truefalse'
-import qs from '../../src/questions'
+import { fromSimple, toSimple } from '../../src/simple'
 
 describe('True/False', () => {
     const simple_tf = {
@@ -9,7 +9,7 @@ describe('True/False', () => {
         text: 'Is this true?',
         type: 'True-or-False',
     }
-    const question = qs.fromSimple(simple_tf)
+    const question = fromSimple(simple_tf)
 
     it('is an instance of correct class', function() {
         question.should.be.an.instanceOf(TrueFalse)

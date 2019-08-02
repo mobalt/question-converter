@@ -1,7 +1,7 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import { FillInMultipleBlanks } from '../../src/questions/multiple_blanks'
-import qs from '../../src/questions'
+import { fromSimple, toSimple } from '../../src/simple'
 
 describe('Fill In Multiple Blanks', () => {
     const simple_multiblanks = {
@@ -12,7 +12,7 @@ describe('Fill In Multiple Blanks', () => {
             color2: ['blue', 'violet'],
         },
     }
-    const question = qs.fromSimple(simple_multiblanks)
+    const question = fromSimple(simple_multiblanks)
 
     it('is an instance of MultipleBlanks', () => {
         question.should.be.an.instanceOf(FillInMultipleBlanks)

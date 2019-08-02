@@ -1,7 +1,7 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import { MultipleAnswers } from '../../src/questions/multiple_answers'
-import qs from '../../src/questions'
+import { fromSimple, toSimple } from '../../src/simple'
 
 describe('Multiple Answers', () => {
     const simple_multianswers = {
@@ -10,7 +10,7 @@ describe('Multiple Answers', () => {
         type: 'Multiple Answers',
         answers: ['Wrong 1', '~ Right 1', 'Wrong 2', '~Right 2', 'Wrong 3'],
     }
-    const question = qs.fromSimple(simple_multianswers)
+    const question = fromSimple(simple_multianswers)
 
     it('is an instance of MultipleAnswers', () => {
         question.should.be.an.instanceOf(MultipleAnswers)
