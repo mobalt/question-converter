@@ -10,6 +10,7 @@ import { ShortAnswer } from './short_answer'
 import { Text } from './text'
 import { TrueFalse } from './truefalse'
 import { fromSimple, toSimple } from '../simple'
+import { isDefined, textHtml, transform } from '../transformations'
 
 const types = {
     Essay,
@@ -70,75 +71,6 @@ function fromCanvas(questionObj) {
         throw new Error('Canvas object is missing type.')
     const QuestionType = findClosestCanvasType(unifiedObj.type)
     return new QuestionType(unifiedObj)
-}
-
-function transform(template) {
-    const transformations = Object.entries(template).map(([left, right]) => {
-        if (typeof right == 'string') {
-            return [left, oneToOne(right)]
-        } else {
-            return [left, right]
-        }
-    })
-
-    return function(obj, reverse = false) {
-        const direction = reverse ? 'backward' : 'forward'
-        const parts = transformations.map(([leftName, fnObj]) => {
-            return fnObj[direction](obj, leftName)
-        })
-        // merge all the parts into a single Object
-        return Object.assign(...parts)
-    }
-}
-
-function isDefined(value) {
-    return typeof value != 'undefined' && value != null
-}
-
-function oneToOne(right) {
-    return {
-        forward: (obj, left) => propIfValue(left, obj[right]),
-        backward: (obj, left) => propIfValue(right, obj[left]),
-    }
-
-    function propIfValue(propName, value) {
-        const result = {}
-        if (isDefined(value)) result[propName] = value
-        return result
-    }
-}
-
-function textHtml(textName, htmlName, required = false) {
-    if (!htmlName) htmlName = textName + '_html'
-
-    return {
-        forward(obj, leftPropName) {
-            const result = {}
-            const { [htmlName]: html, [textName]: text } = obj
-            if (html) result[leftPropName] = html.trim()
-            else if (text) result[leftPropName] = text.trim()
-            else if (required) result[leftPropName] = ''
-            // else just return empty object
-
-            return result
-        },
-        backward(obj, leftPropName) {
-            const result = {}
-            const value = obj[leftPropName]
-            const valueText = String(value).trim()
-
-            if (isDefined(value) && valueText != '') {
-                if (containsHTML(valueText)) result[htmlName] = valueText
-                else result[textName] = valueText
-            } else if (required) result[textName] = ''
-
-            return result
-        },
-    }
-
-    function containsHTML(str) {
-        return /<([^>]+)>/.test(str)
-    }
 }
 
 const canvasAnswer = transform({
