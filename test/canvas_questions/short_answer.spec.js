@@ -52,4 +52,90 @@ describe('Short Answer', () => {
             fullQuestion.should.deep.equal(question)
         })
     })
+
+    describe('#toCanvas', () => {
+        const { Answer } = qs.internal,
+            { ShortAnswer } = qs.types
+
+        const answers = [
+            new Answer({ text: '1', isCorrect: true }),
+            new Answer({ text: 'One', isCorrect: true }),
+            new Answer({ text: '2', isCorrect: true }),
+            new Answer({ text: 'Two', isCorrect: true }),
+        ]
+        const question = new ShortAnswer({
+            text: 'What is one of the first two numbers?',
+            name: 'Question',
+            points: 1,
+            answers,
+        })
+        const canvasObj = qs.toCanvas(question)
+
+        describe('The canvas question object', () => {
+            it('is a normal javascript object', () => {
+                canvasObj.should.be.an.instanceOf(Object)
+            })
+
+            it('has 4 answers', () => {
+                canvasObj.answers.should.be.an('array').with.lengthOf(4)
+            })
+
+            it('has canvas specific question_type', () => {
+                canvasObj.question_type.should.equal('short_answer_question')
+            })
+
+            it('has #oneToOne fields', () => {
+                canvasObj.should.include({
+                    question_text: 'What is one of the first two numbers?',
+                    points_possible: 1,
+                    question_name: 'Question',
+                })
+            })
+
+            describe('has #textHtml fields', () => {
+                it('all fields are excluded', () => {
+                    canvasObj.should.not.have.any.keys(
+                        'correct_comments',
+                        'correct_comments_html',
+                        'incorrect_comments',
+                        'incorrect_comments_html',
+                        'neutral_comments',
+                        'neutral_comments_html',
+                    )
+                })
+            })
+        })
+
+        describe('The canvas answer objects', () => {
+            const [a, b, c, d] = canvasObj.answers
+
+            it('are basic javascript types', () => {
+                a.should.be.an.instanceOf(Object)
+                b.should.be.an.instanceOf(Object)
+                c.should.be.an.instanceOf(Object)
+                d.should.be.an.instanceOf(Object)
+            })
+
+            it('has all answers equal to 100', () => {
+                a.weight.should.equal(100)
+                b.weight.should.equal(100)
+                c.weight.should.equal(100)
+                d.weight.should.equal(100)
+            })
+
+            it('include correct text fields', () => {
+                a.text.should.equal('1')
+                b.text.should.equal('One')
+                c.text.should.equal('2')
+                d.text.should.equal('Two')
+            })
+
+            it('exclude wrong text fields', () => {
+                a.should.not.include.keys('html')
+                b.should.not.include.keys('html')
+                c.should.not.include.keys('html')
+                d.should.not.include.keys('html')
+            })
+        })
+    })
 })
