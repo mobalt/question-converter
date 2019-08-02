@@ -1,4 +1,3 @@
-import { Answer } from './questions/generic'
 import { findType } from './questions'
 
 const convert_simple = {
@@ -51,7 +50,7 @@ function safeAnswerItem(item, group, forceCorrect = false) {
             : { group, ...parseAnswerText(item) }
 
     if (forceCorrect || item.isCorrect) result.isCorrect = true
-    return new Answer(result)
+    return result
 }
 
 function answerList(list, forceCorrect, group) {

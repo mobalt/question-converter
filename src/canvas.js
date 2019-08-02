@@ -1,5 +1,4 @@
 import { isDefined, textHtml, transform } from './transformations'
-import { Answer } from './questions/generic'
 import { findType } from './questions'
 
 const convert_canvas = {
@@ -39,14 +38,10 @@ const canvasAnswer = transform({
     text: textHtml('text', 'html', true),
     isCorrect: {
         forward(obj) {
-            return {
-                isCorrect: !!obj.weight,
-            }
+            return { isCorrect: !!obj.weight }
         },
         backward(obj) {
-            return {
-                weight: obj.isCorrect ? 100 : 0,
-            }
+            return { weight: obj.isCorrect ? 100 : 0 }
         },
     },
 })
@@ -61,9 +56,7 @@ const canvasQuestion = transform({
     neutral_comments: textHtml('neutral_comments'),
     answers: {
         forward(obj) {
-            return {
-                answers: obj.answers.map(o => new Answer(canvasAnswer(o))),
-            }
+            return { answers: obj.answers.map(o => canvasAnswer(o)) }
         },
         backward(obj) {
             return { answers: obj.answers.map(o => canvasAnswer(o, true)) }
