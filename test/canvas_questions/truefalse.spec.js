@@ -130,4 +130,21 @@ describe('True/False', () => {
             })
         })
     })
+
+    describe('Idempotency', () => {
+        it('can convert from/to canvas objects, without loss of data', async () => {
+            // do it 4x!!!
+            const new_canvas_obj = await Promise.resolve(canvas_obj)
+                .then(qs.fromCanvas)
+                .then(qs.toCanvas)
+                .then(qs.fromCanvas)
+                .then(qs.toCanvas)
+                .then(qs.fromCanvas)
+                .then(qs.toCanvas)
+                .then(qs.fromCanvas)
+                .then(qs.toCanvas)
+
+            new_canvas_obj.should.deep.equal(canvas_obj)
+        })
+    })
 })
