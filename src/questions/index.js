@@ -9,6 +9,7 @@ import { MultipleDropdowns } from './multiple_dropdowns'
 import { ShortAnswer } from './short_answer'
 import { Text } from './text'
 import { TrueFalse } from './truefalse'
+import { fromSimple, toSimple } from '../simple'
 
 const types = {
     Essay,
@@ -37,19 +38,8 @@ const convert_canvas = {
     Text: 'text_only_question',
     TrueFalse: 'true_false_question',
 }
-const convert_simple = {
-    Essay: 'Essay',
-    FileUpload: 'FileUpload',
-    MultipleAnswers: 'Multiple Answers',
-    FillInMultipleBlanks: 'Multiple Blanks',
-    MultipleChoice: 'Multiple Choice',
-    MultipleDropdowns: 'Multiple Dropdowns',
-    ShortAnswer: 'Short Answer',
-    Text: 'Text',
-    TrueFalse: 'True False',
-}
 
-function findType(fuzzyName, lookupDict = exact_lookup) {
+export function findType(fuzzyName, lookupDict = exact_lookup) {
     let minDistance = Number.MAX_SAFE_INTEGER,
         closestType
 
@@ -68,30 +58,10 @@ function findClosestCanvasType(type) {
     return findType(type, convert_canvas)
 }
 
-function findClosestSimpleType(type) {
-    if (!type) type = 'Multiple Choice'
-    return findType(type, convert_simple)
-}
-function toSimple(question) {
-    return {
-        ...question,
-        answers: question.answerObj,
-    }
-}
-
 function toCanvas(question) {
     const canvasObj = canvasQuestion(question, true)
     canvasObj.question_type = convert_canvas[question.constructor.name]
     return canvasObj
-}
-
-function fromSimple(simpleObj) {
-    const QuestionType = findClosestSimpleType(simpleObj.type)
-    const unifiedObj = {
-        ...simpleObj,
-        answers: answerList(simpleObj.answers, QuestionType.forceCorrect),
-    }
-    return new QuestionType(unifiedObj)
 }
 
 function fromCanvas(questionObj) {
@@ -211,43 +181,6 @@ const canvasQuestion = transform({
     },
 })
 
-function parseAnswerText(answer) {
-    answer = answer ? answer.toString() : ''
-    const pattern = /^(~ *)?(.+)$/
-    const result = pattern.exec(answer.trim())
-    const text = result[2],
-        isCorrect = !!result[1]
-
-    return { text, isCorrect }
-}
-
-function safeAnswerItem(item, group, forceCorrect = false) {
-    const result =
-        typeof item == 'object'
-            ? { group, ...item, ...parseAnswerText(item.text) }
-            : { group, ...parseAnswerText(item) }
-
-    if (forceCorrect || item.isCorrect) result.isCorrect = true
-    return new Answer(result)
-}
-
-function answerList(list, forceCorrect, group) {
-    // answersObj[] --> Answer[]
-    if (Array.isArray(list)) {
-        return list.map(ans => safeAnswerItem(ans, group, forceCorrect))
-
-        // {groupName: answersObj[]} --> Answer[]
-    } else if (typeof list == 'object') {
-        return [].concat(
-            ...Object.entries(list).map(([group, list]) => {
-                return answerList(list, forceCorrect, group)
-            }),
-        )
-    } else {
-        return []
-    }
-}
-
 export default {
     fromSimple,
     fromCanvas,
@@ -258,5 +191,4 @@ export default {
         Answer,
         Question,
     },
-    findType,
 }
