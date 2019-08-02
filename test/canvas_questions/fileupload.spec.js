@@ -43,23 +43,12 @@ describe('FileUpload', () => {
     })
 
     describe('#toCanvas', () => {
-        const Answer = qs.internal.Answer,
-            MultipleChoice = qs.types.MultipleChoice
-
-        const question = new MultipleChoice({
-            id: 999,
-            text: '<p> Multiple Choice Text </p>',
-            points: 1,
-            name: 'MC Question 1',
-            type: 'Multiple Choice',
-            answers: [
-                new Answer({ text: 'Wrong 1', isCorrect: false }),
-                new Answer({ text: 'Correct One', isCorrect: true }),
-                new Answer({ text: 'Wrong 2', isCorrect: false }),
-                new Answer({ text: '<b>Wrong 3</b>', isCorrect: false }),
-            ],
-            correct_comments: '<b>Yay!</b>',
-            incorrect_comments: 'Nay!',
+        const question = new FileUpload({
+            id: 888,
+            text: 'Please upload your file.',
+            points: 111,
+            name: 'File Upload Question',
+            type: 'File Upload',
         })
         const canvasObj = toCanvas(question)
 
@@ -68,34 +57,29 @@ describe('FileUpload', () => {
                 canvasObj.should.be.an.instanceOf(Object)
             })
 
-            it('has 4 answers', () => {
-                canvasObj.answers.should.be.an('array').with.lengthOf(4)
+            it('has zero answers', () => {
+                canvasObj.answers.should.be.an('array').with.lengthOf(0)
             })
 
             it('has canvas specific question_type', () => {
-                canvasObj.question_type.should.equal('multiple_choice_question')
+                canvasObj.question_type.should.equal('file_upload_question')
             })
 
             it('has #oneToOne fields', () => {
                 canvasObj.should.include({
-                    id: 999,
-                    question_text: '<p> Multiple Choice Text </p>',
-                    points_possible: 1,
-                    question_name: 'MC Question 1',
+                    id: 888,
+                    question_text: 'Please upload your file.',
+                    points_possible: 111,
+                    question_name: 'File Upload Question',
                 })
             })
 
             describe('has #textHtml fields', () => {
-                it('included fields', () => {
-                    canvasObj.should.include({
-                        correct_comments_html: '<b>Yay!</b>',
-                        incorrect_comments: 'Nay!',
-                    })
-                })
-
-                it('excluded fields', () => {
+                it('all fields are excluded', () => {
                     canvasObj.should.not.have.any.keys(
                         'correct_comments',
+                        'correct_comments_html',
+                        'incorrect_comments',
                         'incorrect_comments_html',
                         'neutral_comments',
                         'neutral_comments_html',

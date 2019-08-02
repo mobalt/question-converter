@@ -79,21 +79,20 @@ describe('Multiple Answers', () => {
         })
     })
 
-    describe.skip('#toCanvas', () => {
+    describe('#toCanvas', () => {
         const question = new MultipleAnswers({
-            id: 999,
-            text: '<p> Multiple Choice Text </p>',
-            points: 1,
-            name: 'MC Question 1',
-            type: 'Multiple Choice',
+            id: 5,
+            text: 'Multiple answers',
+            points: 123,
+            name: 'Multiple Answers',
+            type: 'Multiple Answers',
             answers: [
+                { text: 'Correct 1', isCorrect: true },
                 { text: 'Wrong 1', isCorrect: false },
-                { text: 'Correct One', isCorrect: true },
                 { text: 'Wrong 2', isCorrect: false },
-                { text: '<b>Wrong 3</b>', isCorrect: false },
+                { text: '<b>Correct 2</b>', isCorrect: true },
             ],
-            correct_comments: '<b>Yay!</b>',
-            incorrect_comments: 'Nay!',
+            correct_comments: 'You are correct.',
         })
         const canvasObj = toCanvas(question)
 
@@ -107,29 +106,31 @@ describe('Multiple Answers', () => {
             })
 
             it('has canvas specific question_type', () => {
-                canvasObj.question_type.should.equal('multiple_choice_question')
+                canvasObj.question_type.should.equal(
+                    'multiple_answers_question',
+                )
             })
 
             it('has #oneToOne fields', () => {
                 canvasObj.should.include({
-                    id: 999,
-                    question_text: '<p> Multiple Choice Text </p>',
-                    points_possible: 1,
-                    question_name: 'MC Question 1',
+                    id: 5,
+                    question_text: 'Multiple answers',
+                    points_possible: 123,
+                    question_name: 'Multiple Answers',
                 })
             })
 
             describe('has #textHtml fields', () => {
                 it('included fields', () => {
                     canvasObj.should.include({
-                        correct_comments_html: '<b>Yay!</b>',
-                        incorrect_comments: 'Nay!',
+                        correct_comments: 'You are correct.',
                     })
                 })
 
                 it('excluded fields', () => {
                     canvasObj.should.not.have.any.keys(
-                        'correct_comments',
+                        'correct_comments_html',
+                        'incorrect_comments',
                         'incorrect_comments_html',
                         'neutral_comments',
                         'neutral_comments_html',
@@ -149,20 +150,20 @@ describe('Multiple Answers', () => {
             })
 
             it('have correct answer equal to 100', () => {
-                b.weight.should.equal(100)
+                a.weight.should.equal(100)
+                d.weight.should.equal(100)
             })
 
             it('have wrong answers equal to 0', () => {
-                a.weight.should.equal(0)
+                b.weight.should.equal(0)
                 c.weight.should.equal(0)
-                d.weight.should.equal(0)
             })
 
             it('include correct text fields', () => {
-                a.text.should.equal('Wrong 1')
-                b.text.should.equal('Correct One')
+                a.text.should.equal('Correct 1')
+                b.text.should.equal('Wrong 1')
                 c.text.should.equal('Wrong 2')
-                d.html.should.equal('<b>Wrong 3</b>')
+                d.html.should.equal('<b>Correct 2</b>')
             })
 
             it('exclude wrong text fields', () => {
