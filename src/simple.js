@@ -1,6 +1,57 @@
 import { findType } from './questions'
 
-const convert_simple = {
+/**
+ *  Creates an object that can be safely passed into new Answer(obj)
+ * @param {string|number|Object} item
+ * @param group
+ * @param forceCorrect
+ * @returns {{text: string, isCorrect: boolean, ...}}
+ */
+function safeAnswerItem(item, group, forceCorrect = false) {
+    let ansObj, text
+
+    if (typeof item == 'object') {
+        text = item.text
+        ansObj = { group, ...item }
+    } else {
+        text = item
+        ansObj = { group }
+    }
+
+    // string coercion
+    text = String(text).trim()
+
+    const rxMatch = /^(~ *)?(.+)$/.exec(text)
+
+    ansObj.text = rxMatch[2]
+    ansObj.isCorrect = !!rxMatch[1] || forceCorrect || !!ansObj.isCorrect
+
+    return ansObj
+}
+
+function safeAnswerList(answers, forceCorrect, groupName) {
+    if (!answers) return []
+
+    // if already a list,
+    //    then just process each item
+    if (Array.isArray(answers))
+        return answers.map(ans => safeAnswerItem(ans, groupName, forceCorrect))
+
+    // else if is a dict of lists,
+    //   then process the sublists
+    if (typeof answers == 'object')
+        return Object.entries(answers)
+            .map(([groupName, sublist]) =>
+                safeAnswerList(sublist, forceCorrect, groupName),
+            )
+            .flat()
+
+    // else, must be a string
+    //     process as a single item
+    return [safeAnswerItem(answers, groupName, forceCorrect)]
+}
+
+const lookup = {
     Essay: 'Essay',
     FileUpload: 'FileUpload',
     MultipleAnswers: 'Multiple Answers',
@@ -12,60 +63,24 @@ const convert_simple = {
     TrueFalse: 'True False',
 }
 
-function findClosestSimpleType(type) {
-    if (!type) type = 'Multiple Choice'
-    return findType(type, convert_simple)
-}
-
 export function toSimple(question) {
-    return {
-        ...question,
-        answers: question.answerObj,
-    }
-}
+    const result = { ...question }
+    result.type = lookup[question.constructor.name]
 
-export function fromSimple(simpleObj) {
-    const QuestionType = findClosestSimpleType(simpleObj.type)
-    const unifiedObj = {
-        ...simpleObj,
-        answers: answerList(simpleObj.answers, QuestionType.forceCorrect),
-    }
-    return new QuestionType(unifiedObj)
-}
+    // if answers contains only a single group, then promote it
+    const answers = question.answerObj
+	const groups = Object.keys(answers)
+	result.answers = groups.length == 1 ? answers[groups[0]] : answers
 
-function parseAnswerText(answer) {
-    answer = answer ? answer.toString() : ''
-    const pattern = /^(~ *)?(.+)$/
-    const result = pattern.exec(answer.trim())
-    const text = result[2],
-        isCorrect = !!result[1]
-
-    return { text, isCorrect }
-}
-
-function safeAnswerItem(item, group, forceCorrect = false) {
-    const result =
-        typeof item == 'object'
-            ? { group, ...item, ...parseAnswerText(item.text) }
-            : { group, ...parseAnswerText(item) }
-
-    if (forceCorrect || item.isCorrect) result.isCorrect = true
     return result
 }
 
-function answerList(list, forceCorrect, group) {
-    // answersObj[] --> Answer[]
-    if (Array.isArray(list)) {
-        return list.map(ans => safeAnswerItem(ans, group, forceCorrect))
+export function fromSimple(obj) {
+    // MC is the default type, if type == undefined
+    const { type = lookup.MultipleChoice } = obj
+    const QuestionType = findType(type, lookup)
 
-        // {groupName: answersObj[]} --> Answer[]
-    } else if (typeof list == 'object') {
-        return [].concat(
-            ...Object.entries(list).map(([group, list]) => {
-                return answerList(list, forceCorrect, group)
-            }),
-        )
-    } else {
-        return []
-    }
+    obj.answers = safeAnswerList(obj.answers, QuestionType.forceCorrect)
+
+    return new QuestionType(obj)
 }
