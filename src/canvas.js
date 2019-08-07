@@ -1,7 +1,7 @@
 import { isDefined, textHtml, transform } from './transformations'
 import { findType } from './questions'
 
-const convert_canvas = {
+const lookup = {
     Essay: 'essay_question',
     FileUpload: 'file_upload_question',
     MultipleAnswers: 'multiple_answers_question',
@@ -13,38 +13,17 @@ const convert_canvas = {
     TrueFalse: 'true_false_question',
 }
 
-function findClosestCanvasType(type) {
-    return findType(type, convert_canvas)
-}
-
-export function toCanvas(question) {
-    const canvasObj = canvasQuestion(question, true)
-    canvasObj.question_type = convert_canvas[question.constructor.name]
-    return canvasObj
-}
-
-export function fromCanvas(questionObj) {
-    const unifiedObj = canvasQuestion(questionObj)
-    if (!isDefined(unifiedObj.type))
-        throw new Error('Canvas object is missing type.')
-    const QuestionType = findClosestCanvasType(unifiedObj.type)
-    return new QuestionType(unifiedObj)
-}
-
 const canvasAnswer = transform({
     id: 'id',
     group: 'blank_id',
     comments: textHtml('comments'),
     text: textHtml('text', 'html', true),
     isCorrect: {
-        forward(obj) {
-            return { isCorrect: !!obj.weight }
-        },
-        backward(obj) {
-            return { weight: obj.isCorrect ? 100 : 0 }
-        },
+        forward: obj => ({ isCorrect: !!obj.weight }),
+        backward: obj => ({ weight: obj.isCorrect ? 100 : 0 }),
     },
 })
+
 const canvasQuestion = transform({
     id: 'id',
     name: 'question_name',
@@ -63,3 +42,17 @@ const canvasQuestion = transform({
         },
     },
 })
+
+export function toCanvas(question) {
+    const canvasObj = canvasQuestion(question, true)
+    canvasObj.question_type = lookup[question.constructor.name]
+    return canvasObj
+}
+
+export function fromCanvas(questionObj) {
+    const unifiedObj = canvasQuestion(questionObj)
+    if (!isDefined(unifiedObj.type))
+        throw new Error('Canvas object is missing type.')
+    const QuestionType = findType(unifiedObj.type, lookup)
+    return new QuestionType(unifiedObj)
+}
