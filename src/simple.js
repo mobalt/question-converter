@@ -69,8 +69,8 @@ export function toSimple(question) {
 
     // if answers contains only a single group, then promote it
     const answers = question.answerObj
-	const groups = Object.keys(answers)
-	result.answers = groups.length == 1 ? answers[groups[0]] : answers
+    const groups = Object.keys(answers)
+    result.answers = groups.length == 1 ? answers[groups[0]] : answers
 
     return result
 }
