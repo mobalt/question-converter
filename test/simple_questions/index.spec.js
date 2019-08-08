@@ -1,6 +1,7 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { types, fromSimple } from '../../src/questions'
+import {fromSimple, toSimple} from "../../src/simple"
+import types from '../../src/questions'
 
 describe('#fromSimple', function() {
     it('should be an instance of Text', function() {
