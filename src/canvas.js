@@ -1,5 +1,5 @@
 import Q from 'q'
-import { findType } from './questions'
+import editDistance from 'js-levenshtein'
 
 const lookup = {
     Essay: 'essay_question',
@@ -11,6 +11,17 @@ const lookup = {
     ShortAnswer: 'short_answer_question',
     Text: 'text_only_question',
     TrueFalse: 'true_false_question',
+}
+const rLookup = {
+    multiple_choice_question: [undefined, 'Multiple Choice', 'MC'],
+    essay_question: ['Essay'],
+    file_upload_question: ['File Upload'],
+    fill_in_multiple_blanks_question: ['Fill-in-Multiple Blanks'],
+    multiple_answers_question: ['Multiple Answers'],
+    multiple_dropdowns_question: ['Multiple Dropdowns'],
+    short_answer_question: ['Short Answer'],
+    text_only_question: ['Text'],
+    true_false_question: ['True False'],
 }
 
 function isDefined(value) {
@@ -26,8 +37,7 @@ function textHtml(textName, htmlName, required = false) {
 
     return Q(
         obj => {
-            const html = obj[htmlName],
-                text = obj[textName]
+            const { [htmlName]: html, [textName]: text } = obj
 
             return (
                 (html && html.trim()) ||
@@ -54,15 +64,61 @@ function textHtml(textName, htmlName, required = false) {
     )
 }
 
+function lookupCanvasType(fuzzyName) {
+    if (!fuzzyName) {
+        return lookup.MultipleChoice
+    }
+
+    let minDistance = Number.MAX_SAFE_INTEGER,
+        closestType = 'multiple_choice_question'
+
+    for (let typename in rLookup) {
+        for (let possibleMatch of rLookup[typename]) {
+            const distance = editDistance(fuzzyName, String(possibleMatch))
+            if (distance < minDistance) {
+                minDistance = distance
+                closestType = typename
+            }
+        }
+    }
+
+    return closestType
+}
+
 const canvasQuestion = Q({
     id: 'id',
     name: 'question_name',
-    points: 'points_possible',
+    points: Q(
+        'points_possible',
+        pp => (pp === 1 ? undefined : pp),
+        points => (isDefined(points) ? points : 1),
+    ).update({
+        checkX: false,
+    }),
     text: 'question_text',
-    type: 'question_type',
+    type: Q(
+        'question_type',
+        qtype => rLookup[qtype] && rLookup[qtype][0],
+        type => (type ? lookupCanvasType(type) : lookup.MultipleChoice),
+    ).update({
+        checkX: false,
+    }),
     correct_comments: textHtml('correct_comments'),
     incorrect_comments: textHtml('incorrect_comments'),
     neutral_comments: textHtml('neutral_comments'),
+    answer: Q(
+        'answers',
+        function(answers) {
+            if (this.obj.question_type === lookup.TrueFalse) {
+                return !!answers[0].weight
+            }
+            return undefined
+        },
+        isTrue => [
+            { text: 'True', weight: isTrue ? 100 : 0 },
+            { text: 'False', weight: isTrue ? 0 : 100 },
+        ],
+    ),
     answers: Q.mapTo(
         'answers',
         Q({
@@ -79,16 +135,23 @@ const canvasQuestion = Q({
     ),
 })
 
-export function toCanvas(question) {
-    const canvasObj = canvasQuestion.reverse(question)
-    canvasObj.question_type = lookup[question.constructor.name]
-    return canvasObj
-}
+export default canvasQuestion
+/**
+ * Convert to canvas-ready obj
+ * @type {{}} SimpleObject
+ */
+export const toCanvas = canvasQuestion.reverse
 
-export function fromCanvas(questionObj) {
-    const unifiedObj = canvasQuestion(questionObj)
-    if (!isDefined(unifiedObj.type))
-        throw new Error('Canvas object is missing type.')
-    const QuestionType = findType(unifiedObj.type, lookup)
-    return new QuestionType(unifiedObj)
-}
+/**
+ * Convert directly from a canvas response
+ * @type {{}} canvasQuestionObj
+ */
+export const fromCanvas = canvasQuestion
+
+// export function toCanvas(question) {
+//     return canvasQuestion.reverse(question)
+// }
+//
+// export function fromCanvas(questionObj) {
+// 	return canvasQuestion(questionObj)
+// }

@@ -1,8 +1,8 @@
 {
   "name": "question-converter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Convert quiz questions from CanvasLMS api to custom yaml format",
-  "main": "index.js",
+  "main": "./src/index.js",
   "repository": "https://github.com/mobalt/question-converter",
   "author": "Moises Baltazar <me@moisesb.com>",
   "scripts": {
@@ -16,7 +16,6 @@
   "dependencies": {
     "esm": "^3.2.25",
     "js-levenshtein": "^1.1.6",
-    "js-yaml": "^3.13.1",
     "q": "mobalt/q"
   },
   "devDependencies": {
