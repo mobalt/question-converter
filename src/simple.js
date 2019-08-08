@@ -1,4 +1,5 @@
 import { findType } from './questions'
+import Q from 'q'
 
 /**
  *  Creates an object that can be safely passed into new Answer(obj)
@@ -63,8 +64,24 @@ const lookup = {
     TrueFalse: 'True False',
 }
 
+const simpleQuestion = Q({
+	text:'text',
+	name: 'name',
+	points: 'points',
+	correct_comments:'correct_comments',
+	incorrect_comments:'incorrect_comments',
+	neutral_comments:'neutral_comments',
+	id:'id',
+	answers: Q('answers',
+		answers => {
+
+		}
+		)
+})
+
 export function toSimple(question) {
-    const result = { ...question }
+	const result = { ...question }
+	console.log(result)
     result.type = lookup[question.constructor.name]
 
     // if answers contains only a single group, then promote it
@@ -80,7 +97,15 @@ export function fromSimple(obj) {
     const { type = lookup.MultipleChoice } = obj
     const QuestionType = findType(type, lookup)
 
+	obj = simpleQuestion(obj)
     obj.answers = safeAnswerList(obj.answers, QuestionType.forceCorrect)
 
     return new QuestionType(obj)
+}
+export function fromCanvas(questionObj) {
+	const unifiedObj = canvasQuestion(questionObj)
+	if (!isDefined(unifiedObj.type))
+		throw new Error('Canvas object is missing type.')
+	const QuestionType = findType(unifiedObj.type, lookup)
+	return new QuestionType(unifiedObj)
 }
