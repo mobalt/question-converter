@@ -17,10 +17,6 @@ describe('Text', () => {
     describe('#fromCanvas', () => {
         const question = fromCanvas(canvas_obj)
 
-        it('is an instance of Text', function() {
-            question.should.be.an.instanceOf(Text)
-        })
-
         it('has correct question label', function() {
             question.text.should.equal('<p>This has no question.</p>')
         })
@@ -41,12 +37,13 @@ describe('Text', () => {
     })
 
     describe('#toCanvas', () => {
-        const question = new Text({
+        const question = {
+            type: 'Text',
             text: 'Just text.',
             name: 'Question',
             points: 0,
             answers: [],
-        })
+        }
         const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {

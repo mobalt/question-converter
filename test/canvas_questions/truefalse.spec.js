@@ -24,10 +24,6 @@ describe('True/False', () => {
     describe('#fromCanvas', () => {
         const question = fromCanvas(canvas_obj)
 
-        it('is an instance of correct class', function() {
-            question.should.be.an.instanceOf(TrueFalse)
-        })
-
         it('has correct question label', function() {
             question.text.should.equal('<p>Is this true?</p>')
         })
@@ -55,15 +51,13 @@ describe('True/False', () => {
     })
 
     describe('#toCanvas', () => {
-        const question = new TrueFalse({
+        const question = {
             text: 'Is this true?',
             name: 'A True-or-False Question',
             points: 1,
-            answers: [
-                { text: 'True', isCorrect: true },
-                { text: 'False', isCorrect: false },
-            ],
-        })
+            type: 'True False',
+            answer: true,
+        }
         const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {

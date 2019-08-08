@@ -28,10 +28,6 @@ describe('Multiple Choice', () => {
     describe('#fromCanvas', () => {
         const question = fromCanvas(canvas_obj)
 
-        it('is an instance of MultipleChoice', () => {
-            question.should.be.an.instanceOf(MultipleChoice)
-        })
-
         it('has correct prompt', () => {
             question.text.should.equal(
                 '<p><strong>Bold</strong>, <em>Italics</em>, <span style="text-decoration: underline;">Underline</span>.</p>',

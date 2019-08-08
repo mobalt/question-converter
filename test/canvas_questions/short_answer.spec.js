@@ -30,9 +30,6 @@ describe('Short Answer', () => {
     describe('#fromCanvas', () => {
         const question = fromCanvas(canvas_obj)
 
-        it('is correct instance', () => {
-            question.should.be.an.instanceOf(ShortAnswer)
-        })
         it('has correct prompt', () => {
             question.text.should.equal('<p>Roses are _____. </p>')
         })
@@ -44,9 +41,6 @@ describe('Short Answer', () => {
             a.isCorrect.should.be.true
             b.isCorrect.should.be.true
         })
-        it('is worth 1 points', () => {
-            question.points.should.equal(1)
-        })
         it('can handle the extra fields of a full canvas object', () => {
             const canvas_obj_full_version = canvas_questions[2]
             const fullQuestion = fromCanvas(canvas_obj_full_version)
@@ -55,7 +49,7 @@ describe('Short Answer', () => {
     })
 
     describe('#toCanvas', () => {
-        const question = new ShortAnswer({
+        const question = {
             text: 'What is one of the first two numbers?',
             name: 'Question',
             points: 1,
@@ -65,7 +59,8 @@ describe('Short Answer', () => {
                 { text: '2', isCorrect: true },
                 { text: 'Two', isCorrect: true },
             ],
-        })
+            type: 'Short Answer',
+        }
         const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {

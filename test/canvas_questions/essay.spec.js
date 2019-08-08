@@ -18,7 +18,7 @@ describe('Essay', () => {
         const question = fromCanvas(canvas_obj)
 
         it('is correct instance', function() {
-            question.should.be.an.instanceOf(Essay)
+            question.should.be.an.instanceOf(Object)
         })
 
         it('has correct question label', function() {
@@ -30,7 +30,8 @@ describe('Essay', () => {
         })
 
         it('worth correct number of points', function() {
-            question.points.should.equal(1)
+            // question.points.should.equal(1)
+            question.should.not.have.any.keys('points')
         })
 
         it('can handle extra fields of a full canvas object', () => {
@@ -41,14 +42,14 @@ describe('Essay', () => {
     })
 
     describe('#toCanvas', () => {
-        const question = new Essay({
+        const question = {
             name: 'Essay Question',
             text: 'Write an essay:',
             answers: [],
-            question_type: 'essay_question',
+            type: 'Essay',
             correct_comments: 'Correct Text',
             incorrect_comments: '<b>Incorrect</b> html',
-        })
+        }
         const canvasObj = toCanvas(question)
 
         describe('The canvas object', () => {

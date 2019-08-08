@@ -30,10 +30,6 @@ describe('Multiple Answers', () => {
     describe('#fromCanvas', () => {
         const question = fromCanvas(canvas_obj)
 
-        it('is an instance of MultipleAnswers', () => {
-            question.should.be.an.instanceOf(MultipleAnswers)
-        })
-
         it('has correct prompt', () => {
             question.text.should.equal(
                 '<p>Solve. <img class="equation_image" title="\\sqrt{4}=?" src="http://fake.instructure.com/equation_images/%255Csqrt%257B4%257D%253D%253F" alt="LaTeX: \\sqrt{4}=?" data-equation-content="\\sqrt{4}=?"></p>',
@@ -42,15 +38,6 @@ describe('Multiple Answers', () => {
 
         it('has correct number of answers', () => {
             question.answers.should.have.lengthOf(5)
-        })
-
-        it('all answers are instances of Answer', () => {
-            const [a, b, c, d, e] = question.answers
-            a.should.be.instanceOf(Answer)
-            b.should.be.instanceOf(Answer)
-            c.should.be.instanceOf(Answer)
-            d.should.be.instanceOf(Answer)
-            e.should.be.instanceOf(Answer)
         })
 
         it('correct answers are identified', () => {
@@ -80,7 +67,7 @@ describe('Multiple Answers', () => {
     })
 
     describe('#toCanvas', () => {
-        const question = new MultipleAnswers({
+        const question = {
             id: 5,
             text: 'Multiple answers',
             points: 123,
@@ -93,7 +80,7 @@ describe('Multiple Answers', () => {
                 { text: '<b>Correct 2</b>', isCorrect: true },
             ],
             correct_comments: 'You are correct.',
-        })
+        }
         const canvasObj = toCanvas(question)
 
         describe('The canvas question object', () => {
