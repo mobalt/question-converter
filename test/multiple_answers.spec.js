@@ -1,9 +1,9 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import { MultipleAnswers } from '../../src/questions/multiple_answers'
-import { Answer } from '../../src/questions/generic'
-import { fromCanvas, toCanvas } from '../../src/canvas'
+import { MultipleAnswers } from '../src/questions/multiple_answers'
+import { Answer } from '../src/questions/generic'
+import { fromCanvas, toCanvas } from '../index'
 
 describe('Multiple Answers', () => {
     //const canvas_question_obj = canvas_questions[4]

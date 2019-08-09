@@ -1,8 +1,8 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import { fromCanvas, toCanvas } from '../../src/canvas'
-import { MultipleChoice } from '../../src/questions/multiple_choice'
+import { fromCanvas, toCanvas } from '../index'
+import { MultipleChoice } from '../src/questions/multiple_choice'
 
 describe('Multiple Choice', () => {
     const canvas_obj = {

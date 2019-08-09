@@ -1,48 +1,50 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import { fromCanvas, toCanvas } from '../../src/canvas'
-import { ShortAnswer } from '../../src/questions/short_answer'
+import { fromCanvas, toCanvas } from '../index'
+import { TrueFalse } from '../src/questions/truefalse'
 
-describe('Short Answer', () => {
+describe('True/False', () => {
     const canvas_obj = {
-        id: 3,
-        question_name: 'Question3Name',
-        points_possible: 1,
-        question_text: '<p>Roses are _____. </p>',
+        id: 2,
+        question_name: 'Question2Name',
+        points_possible: 2,
+        question_text: '<p>Is this true?</p>',
+        correct_comments_html: '<p><strong>Positive</strong> comment. :-)</p>',
+        incorrect_comments_html:
+            '<p><strong>Negative</strong> comment. :-(</p>',
+        neutral_comments_html: '<p>General comment.</p>',
         answers: [
-            {
-                id: 5611,
-                comments_html: '<p>Nice typical answer.</p>',
-                text: 'Red',
-                weight: 100,
-            },
-            {
-                id: 989,
-                comments_html: '<p>Accurate.</p>',
-                text: 'Smelly',
-                weight: 100,
-            },
+            { id: 8974, text: 'True', weight: 100 },
+            { id: 9876, text: 'False', weight: 0 },
         ],
-        question_type: 'short_answer_question',
+        question_type: 'true_false_question',
     }
 
     describe('#fromCanvas', () => {
         const question = fromCanvas(canvas_obj)
 
-        it('has correct prompt', () => {
-            question.text.should.equal('<p>Roses are _____. </p>')
+        it('has correct question label', function() {
+            question.text.should.equal('<p>Is this true?</p>')
         })
-        it('has correct number of answers', () => {
+
+        it('has correct number of answers', function() {
             question.answers.should.have.lengthOf(2)
         })
-        it('has all answers correct', () => {
-            const [a, b] = question.answers
-            a.isCorrect.should.be.true
-            b.isCorrect.should.be.true
+
+        it('has only one answer labelled correct', function() {
+            const [t, f] = question.answers
+
+            t.isCorrect.should.be.true
+            f.isCorrect.should.be.false
         })
+
+        it('worth correct number of points', function() {
+            question.points.should.equal(2)
+        })
+
         it('can handle the extra fields of a full canvas object', () => {
-            const canvas_obj_full_version = canvas_questions[2]
+            const canvas_obj_full_version = canvas_questions[1]
             const fullQuestion = fromCanvas(canvas_obj_full_version)
             fullQuestion.should.deep.equal(question)
         })
@@ -50,16 +52,11 @@ describe('Short Answer', () => {
 
     describe('#toCanvas', () => {
         const question = {
-            text: 'What is one of the first two numbers?',
-            name: 'Question',
+            text: 'Is this true?',
+            name: 'A True-or-False Question',
             points: 1,
-            answers: [
-                { text: '1', isCorrect: true },
-                { text: 'One', isCorrect: true },
-                { text: '2', isCorrect: true },
-                { text: 'Two', isCorrect: true },
-            ],
-            type: 'Short Answer',
+            type: 'True False',
+            answer: true,
         }
         const canvasObj = toCanvas(question)
 
@@ -68,24 +65,24 @@ describe('Short Answer', () => {
                 canvasObj.should.be.an.instanceOf(Object)
             })
 
-            it('has 4 answers', () => {
-                canvasObj.answers.should.be.an('array').with.lengthOf(4)
+            it('has 2 answers', () => {
+                canvasObj.answers.should.be.an('array').with.lengthOf(2)
             })
 
             it('has canvas specific question_type', () => {
-                canvasObj.question_type.should.equal('short_answer_question')
+                canvasObj.question_type.should.equal('true_false_question')
             })
 
             it('has #oneToOne fields', () => {
                 canvasObj.should.include({
-                    question_text: 'What is one of the first two numbers?',
+                    question_text: 'Is this true?',
                     points_possible: 1,
-                    question_name: 'Question',
+                    question_name: 'A True-or-False Question',
                 })
             })
 
             describe('has #textHtml fields', () => {
-                it('all fields are excluded', () => {
+                it('has all fields excluded', () => {
                     canvasObj.should.not.have.any.keys(
                         'correct_comments',
                         'correct_comments_html',
@@ -99,34 +96,29 @@ describe('Short Answer', () => {
         })
 
         describe('The canvas answer objects', () => {
-            const [a, b, c, d] = canvasObj.answers
+            const [a, b] = canvasObj.answers
 
             it('are basic javascript types', () => {
                 a.should.be.an.instanceOf(Object)
                 b.should.be.an.instanceOf(Object)
-                c.should.be.an.instanceOf(Object)
-                d.should.be.an.instanceOf(Object)
             })
 
-            it('has all answers equal to 100', () => {
+            it('have correct answer equal to 100', () => {
                 a.weight.should.equal(100)
-                b.weight.should.equal(100)
-                c.weight.should.equal(100)
-                d.weight.should.equal(100)
+            })
+
+            it('have wrong answers equal to 0', () => {
+                b.weight.should.equal(0)
             })
 
             it('include correct text fields', () => {
-                a.text.should.equal('1')
-                b.text.should.equal('One')
-                c.text.should.equal('2')
-                d.text.should.equal('Two')
+                a.text.should.equal('True')
+                b.text.should.equal('False')
             })
 
             it('exclude wrong text fields', () => {
                 a.should.not.include.keys('html')
                 b.should.not.include.keys('html')
-                c.should.not.include.keys('html')
-                d.should.not.include.keys('html')
             })
         })
     })

@@ -1,8 +1,8 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
 import canvas_questions from './questions'
-import { fromCanvas, toCanvas } from '../../src/canvas'
-import { Text } from '../../src/questions/text'
+import { fromCanvas, toCanvas } from '../index'
+import { Text } from '../src/questions/text'
 
 describe('Text', () => {
     const canvas_obj = {

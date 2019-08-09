@@ -1,90 +1,86 @@
 import 'chai/register-should'
 import { describe } from 'mocha'
-import { Essay } from '../../src/questions/essay'
-import { fromCanvas, toCanvas } from '../../src/canvas'
 import canvas_questions from './questions'
+import { fromCanvas, toCanvas } from '../index'
+import { FileUpload } from '../src/questions/fileupload'
 
-describe('Essay', () => {
+describe('FileUpload', () => {
     const canvas_obj = {
-        id: 8,
-        question_name: 'Essay',
+        id: 9,
+        question_name: 'File Upload',
         points_possible: 1,
-        question_text: '<p>Type an essay.</p>',
+        question_text: '<p>Upload your <strong>docx</strong> file.</p>',
         answers: [],
-        question_type: 'essay_question',
+        question_type: 'file_upload_question',
     }
 
     describe('#fromCanvas', () => {
         const question = fromCanvas(canvas_obj)
 
-        it('is correct instance', function() {
+        it('is an instance of FileUpload', () => {
             question.should.be.an.instanceOf(Object)
         })
 
         it('has correct question label', function() {
-            question.text.should.equal('<p>Type an essay.</p>')
+            question.text.should.equal(
+                '<p>Upload your <strong>docx</strong> file.</p>',
+            )
         })
 
         it('has no answer items', function() {
-            question.answers.should.be.empty
+            question.answers.should.be.an('array').but.empty
         })
 
-        it('worth correct number of points', function() {
-            // question.points.should.equal(1)
-            question.should.not.have.any.keys('points')
+        it('hides points when only worth 1 pt', function() {
+            question.should.not.have.keys('points')
         })
 
-        it('can handle extra fields of a full canvas object', () => {
-            const canvas_obj_full_version = canvas_questions[7]
-            const full_question = fromCanvas(canvas_obj_full_version)
-            full_question.should.deep.equal(question)
+        it('can handle the extra fields of a full canvas object', () => {
+            const canvas_obj_full_version = canvas_questions[8]
+            const fullQuestion = fromCanvas(canvas_obj_full_version)
+            fullQuestion.should.deep.equal(question)
         })
     })
 
     describe('#toCanvas', () => {
         const question = {
-            name: 'Essay Question',
-            text: 'Write an essay:',
-            answers: [],
-            type: 'Essay',
-            correct_comments: 'Correct Text',
-            incorrect_comments: '<b>Incorrect</b> html',
+            id: 888,
+            text: 'Please upload your file.',
+            points: 111,
+            name: 'File Upload Question',
+            type: 'File Upload',
         }
         const canvasObj = toCanvas(question)
 
-        describe('The canvas object', () => {
+        describe('The canvas question object', () => {
             it('is a normal javascript object', () => {
                 canvasObj.should.be.an.instanceOf(Object)
             })
 
-            it('has 0 answers', () => {
-                canvasObj.answers.should.be.an('array').but.empty
+            it.skip('has zero answers', () => {
+                canvasObj.answers.should.be.an('array').with.lengthOf(0)
             })
 
             it('has canvas specific question_type', () => {
-                canvasObj.question_type.should.equal('essay_question')
+                canvasObj.question_type.should.equal('file_upload_question')
             })
 
             it('has #oneToOne fields', () => {
                 canvasObj.should.include({
-                    question_text: 'Write an essay:',
-                    points_possible: 1,
-                    question_name: 'Essay Question',
+                    id: 888,
+                    question_text: 'Please upload your file.',
+                    points_possible: 111,
+                    question_name: 'File Upload Question',
                 })
             })
 
             describe('has #textHtml fields', () => {
-                it('included fields', () => {
-                    canvasObj.should.include({
-                        correct_comments: 'Correct Text',
-                        incorrect_comments_html: '<b>Incorrect</b> html',
-                    })
-                })
-
-                it('excluded fields', () => {
+                it('all fields are excluded', () => {
                     canvasObj.should.not.have.any.keys(
+                        'correct_comments',
                         'correct_comments_html',
                         'incorrect_comments',
+                        'incorrect_comments_html',
                         'neutral_comments',
                         'neutral_comments_html',
                     )
